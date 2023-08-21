@@ -1,10 +1,11 @@
-package tech.ritzvincentculanag.intelliquest
+package tech.ritzvincentculanag.intelliquest.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import tech.ritzvincentculanag.intelliquest.R
 
 
 class CreateFragment : Fragment() {

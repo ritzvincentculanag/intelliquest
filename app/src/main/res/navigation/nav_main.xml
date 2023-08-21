@@ -6,17 +6,17 @@
     app:startDestination="@id/questFragment">
     <fragment
         android:id="@+id/questFragment"
-        android:name="tech.ritzvincentculanag.intelliquest.QuestFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.QuestFragment"
         android:label="fragment_quest"
         tools:layout="@layout/fragment_quest" />
     <fragment
         android:id="@+id/createFragment"
-        android:name="tech.ritzvincentculanag.intelliquest.CreateFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.CreateFragment"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create" />
     <fragment
         android:id="@+id/rankFragment"
-        android:name="tech.ritzvincentculanag.intelliquest.RankFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.RankFragment"
         android:label="fragment_rank"
         tools:layout="@layout/fragment_rank" />
 </navigation>
