@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="tech.ritzvincentculanag.intelliquest.viewmodel.LoginViewModel" />
+            type="tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel" />
     </data>
 
     <ScrollView
@@ -74,7 +74,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
             <Button
-                android:onClick="@{() -> viewModel.toastData()}"
                 android:id="@+id/button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
