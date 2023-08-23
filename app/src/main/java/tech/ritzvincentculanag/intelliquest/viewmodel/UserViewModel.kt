@@ -18,13 +18,8 @@ class UserViewModel(application: Application) : ViewModel() {
     var inputUsername = MutableLiveData<String>()
     var inputPassword = MutableLiveData<String>()
 
-    private val repository: UserRepository
-    private val users: Flow<List<User>>
-
-    init {
-        repository = UserRepository(AppDatabase.getDatabase(application).userDao())
-        users = repository.getUsers()
-    }
+    private val repository: UserRepository = UserRepository(AppDatabase.getDatabase(application).userDao())
+    private val users: Flow<List<User>> = repository.getUsers()
 
     fun insert(user: User) {
         viewModelScope.launch {
