@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityLoginBinding
 import tech.ritzvincentculanag.intelliquest.factory.UserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.util.Snacks
@@ -38,6 +41,10 @@ class LoginActivity : AppCompatActivity() {
             if (!usernameIsValid && !passwordIsValid) {
                 Snacks.shortSnack(binding.root, "Fields are required")
                 return@setOnClickListener
+            }
+
+            CoroutineScope(Dispatchers.Default).launch {
+                viewModel.login(binding.root)
             }
         }
         binding.inputUsername.setOnFocusChangeListener { _, focused ->
