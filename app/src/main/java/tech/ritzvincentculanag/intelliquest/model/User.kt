@@ -5,13 +5,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Users")
 data class User(
-    @PrimaryKey
-    var userId: Int,
+    @PrimaryKey(autoGenerate = true)
+    var userId: Int = 0,
+    var score: Int = 0,
 
     var firstName: String,
     var lastName: String,
     var middleName: String,
     var username: String,
-    var password: String,
-    var score: Int
+    var password: String
 )
