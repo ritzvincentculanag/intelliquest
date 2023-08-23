@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel" />
@@ -15,9 +16,9 @@
         tools:context=".LoginActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/containerUsername"
@@ -34,10 +35,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputUsername"
-                    android:text="@={viewModel.inputUsername}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username" />
+                    android:hint="Username"
+                    android:text="@={viewModel.inputUsername}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -51,7 +52,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/containerUsername">
+                app:layout_constraintTop_toBottomOf="@+id/containerUsername"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputPassword"
