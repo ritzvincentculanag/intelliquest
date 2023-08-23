@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 import tech.ritzvincentculanag.intelliquest.model.User
 import tech.ritzvincentculanag.intelliquest.repository.UserRepository
+import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 
 class UserViewModel(private val application: Application) : ViewModel() {
@@ -55,6 +56,7 @@ class UserViewModel(private val application: Application) : ViewModel() {
     suspend fun login(view: View) {
         val username = inputUsername.value!!
         val password = inputPassword.value!!
+        val sessionManager = SessionManager(application.applicationContext)
 
         getUser(username, password).collect { user ->
             if (user == null) {
@@ -62,6 +64,7 @@ class UserViewModel(private val application: Application) : ViewModel() {
                 return@collect
             }
 
+            sessionManager.saveSession(user)
             Snacks.shortSnack(view, "Welcome user!")
         }
     }

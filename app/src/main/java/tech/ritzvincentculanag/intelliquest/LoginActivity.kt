@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityLoginBinding
 import tech.ritzvincentculanag.intelliquest.factory.UserViewModelFactory
+import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.util.Validators
 import tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel
@@ -22,12 +23,26 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        prepareLayout()
+        checkUserStatus()
+        setValidations()
+    }
+
+    private fun checkUserStatus() {
+        val sessionManager = SessionManager(applicationContext)
+        val userIsLoggedIn = sessionManager.userIsActive()
+
+        if (userIsLoggedIn) {
+            Snacks.shortSnack(binding.root, message = "User is already logged in!")
+        }
+    }
+
+    private fun prepareLayout() {
         factory = UserViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
         binding = ActivityLoginBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
         setContentView(binding.root)
-        setValidations()
     }
 
     private fun setValidations() {
