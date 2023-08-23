@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validateField(field: TextInputLayout): Boolean {
-        val input = binding.inputUsername.text.toString()
+        val input = field.editText?.text.toString()
 
         return if (input.isEmpty()) {
             Validators.setError(field)
