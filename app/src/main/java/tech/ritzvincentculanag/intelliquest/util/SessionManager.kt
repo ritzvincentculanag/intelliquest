@@ -8,6 +8,7 @@ private const val PREFERENCE_NAME = "Intelliquest"
 
 private const val USER_ACTIVE = "USER_ACTIVE"
 private const val USER_ID = "USER_ID"
+private const val SKIP_INTRODUCTION = "SKIP_INTRODUCTION"
 
 class SessionManager(context: Context) {
 
@@ -25,11 +26,18 @@ class SessionManager(context: Context) {
         preferencesEditor.commit()
     }
 
+    fun skipIntroduction() {
+        preferencesEditor.putBoolean(SKIP_INTRODUCTION, true)
+        preferencesEditor.commit()
+    }
+
     fun clearSession() {
         preferencesEditor.clear()
         preferencesEditor.commit()
     }
 
     fun userIsActive(): Boolean = preferences.getBoolean(USER_ACTIVE, false)
+
+    fun hasSkipIntroduction(): Boolean = preferences.getBoolean(SKIP_INTRODUCTION, false)
 
 }
