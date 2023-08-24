@@ -1,5 +1,6 @@
 package tech.ritzvincentculanag.intelliquest
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityLoginBinding
 import tech.ritzvincentculanag.intelliquest.factory.UserViewModelFactory
+import tech.ritzvincentculanag.intelliquest.ui.RegisterUser
 import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.util.Validators
@@ -63,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         binding.actionSignup.setOnClickListener {
-            viewModel.logout(this)
+            startActivity(Intent(this, RegisterUser::class.java))
         }
         binding.inputUsername.setOnFocusChangeListener { _, focused ->
             if (!focused) {
