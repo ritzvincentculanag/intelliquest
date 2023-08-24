@@ -21,10 +21,8 @@ class Introduction : AppCompatActivity() {
         adapter = IntroductionAdapter()
         sessionManager = SessionManager(applicationContext)
 
-        if (sessionManager.userIsActive()) {
-            val goToLogin = Intent(this, LoginActivity::class.java)
-            startActivity(goToLogin)
-            onDestroy()
+        if (sessionManager.userIsActive() || sessionManager.hasSkipIntroduction()) {
+            showLoginScreen()
         }
 
         binding.viewPager.adapter = adapter
@@ -32,6 +30,19 @@ class Introduction : AppCompatActivity() {
         binding.viewPager.clipChildren = false
         binding.viewPagerIndicator.setViewPager(binding.viewPager)
 
+        setListeners()
         setContentView(binding.root)
+    }
+
+    private fun setListeners() {
+        binding.actionSkip.setOnClickListener {
+            sessionManager.skipIntroduction()
+            showLoginScreen()
+        }
+    }
+
+    private fun showLoginScreen() {
+        val goToLogin = Intent(this, LoginActivity::class.java)
+        startActivity(goToLogin)
     }
 }
