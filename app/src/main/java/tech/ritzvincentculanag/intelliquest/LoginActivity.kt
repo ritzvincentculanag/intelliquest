@@ -62,6 +62,9 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.login(binding.root)
             }
         }
+        binding.actionSignup.setOnClickListener {
+            viewModel.logout(this)
+        }
         binding.inputUsername.setOnFocusChangeListener { _, focused ->
             if (!focused) {
                 validateField(containerUsername)
