@@ -14,10 +14,10 @@
         android:theme="@style/Theme.IntelliquestKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".ui.Introduction"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.Introduction"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
