@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_dashboard"
+    app:startDestination="@id/campFragment">
+
+    <fragment
+        android:id="@+id/campFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.CampFragment"
+        android:label="fragment_camp"
+        tools:layout="@layout/fragment_camp" />
+    <fragment
+        android:id="@+id/questFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.QuestFragment"
+        android:label="fragment_quest"
+        tools:layout="@layout/fragment_quest" />
+    <fragment
+        android:id="@+id/rankFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.RankFragment"
+        android:label="fragment_rank"
+        tools:layout="@layout/fragment_rank" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
