@@ -20,12 +20,19 @@ import tech.ritzvincentculanag.intelliquest.util.Snacks
 
 class UserViewModel(private val application: Application) : ViewModel() {
 
+    private val sessionManager = SessionManager(application.applicationContext)
+    private val repository: UserRepository =
+        UserRepository(AppDatabase.getDatabase(application).userDao())
+    private val users: Flow<List<User>> = repository.getUsers()
+
     var inputUsername = MutableLiveData<String>()
     var inputPassword = MutableLiveData<String>()
 
-    private val sessionManager = SessionManager(application.applicationContext)
-    private val repository: UserRepository = UserRepository(AppDatabase.getDatabase(application).userDao())
-    private val users: Flow<List<User>> = repository.getUsers()
+    var inputRegFirstName = MutableLiveData<String>()
+    var inputRegLastName = MutableLiveData<String>()
+    var inputRegMiddleName = MutableLiveData<String>()
+    var inputRegUsername = MutableLiveData<String>()
+    var inputRegPassword = MutableLiveData<String>()
 
     fun insert(user: User) {
         viewModelScope.launch {
@@ -54,6 +61,18 @@ class UserViewModel(private val application: Application) : ViewModel() {
         }
 
         return userFlow.flowOn(Dispatchers.IO)
+    }
+
+    fun registerUser() {
+        val user = User(
+            firstName = inputRegFirstName.value!!,
+            lastName = inputRegLastName.value!!,
+            middleName = inputRegMiddleName.value!!,
+            username = inputRegUsername.value!!,
+            password = inputRegPassword.value!!
+        )
+
+        insert(user)
     }
 
     fun logout(activity: Activity) {
