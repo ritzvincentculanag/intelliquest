@@ -14,6 +14,9 @@
         android:theme="@style/Theme.IntelliquestKotlin"
         tools:targetApi="31">
         <activity
+            android:name=".ui.Dashboard"
+            android:exported="false" />
+        <activity
             android:name=".ui.RegisterUser"
             android:exported="false"
             android:label="Register"
