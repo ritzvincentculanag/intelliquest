@@ -14,7 +14,7 @@ class RankFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_camp, container, false)
+        return inflater.inflate(R.layout.fragment_rank, container, false)
     }
 
 }
