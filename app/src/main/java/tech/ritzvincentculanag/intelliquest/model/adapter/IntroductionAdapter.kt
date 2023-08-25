@@ -44,7 +44,7 @@ class IntroductionAdapter :  RecyclerView.Adapter<IntroductionAdapter.Introducti
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IntroductionViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.viewpager_intro, parent, false)
+            .inflate(R.layout.layout_viewpager_intro, parent, false)
 
         return IntroductionViewHolder(view)
     }
