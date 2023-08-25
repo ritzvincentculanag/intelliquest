@@ -5,9 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityLoginBinding
 import tech.ritzvincentculanag.intelliquest.factory.UserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.ui.Dashboard
@@ -60,12 +57,9 @@ class LoginActivity : AppCompatActivity() {
                 Snacks.shortSnack(binding.root, "Fields are required")
                 return@setOnClickListener
             }
-
-            CoroutineScope(Dispatchers.Default).launch {
-                viewModel.login(binding.root)
+            if (viewModel.login(binding.root)) {
+                startActivity(Intent(this, Dashboard::class.java))
             }
-
-            startActivity(Intent(this, Dashboard::class.java))
         }
         binding.actionSignup.setOnClickListener {
             startActivity(Intent(this, RegisterUser::class.java))
