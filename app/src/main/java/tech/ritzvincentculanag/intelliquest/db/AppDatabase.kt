@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import tech.ritzvincentculanag.intelliquest.dao.QuestDao
 import tech.ritzvincentculanag.intelliquest.dao.UserDao
 import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.model.User
@@ -16,6 +17,7 @@ import tech.ritzvincentculanag.intelliquest.model.User
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun questDao(): QuestDao
 
     companion object {
 
