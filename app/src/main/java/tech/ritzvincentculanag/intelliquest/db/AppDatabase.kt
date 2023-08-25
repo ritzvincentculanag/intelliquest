@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.dao.QuestDao
 import tech.ritzvincentculanag.intelliquest.dao.UserDao
 import tech.ritzvincentculanag.intelliquest.model.Quest
+import tech.ritzvincentculanag.intelliquest.model.QuestType
 import tech.ritzvincentculanag.intelliquest.model.User
 
 @Database(entities = [User::class, Quest::class], version = 2)
@@ -44,7 +45,8 @@ abstract class AppDatabase : RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
 
-                val dao = INSTANCE?.userDao()
+                val user = INSTANCE?.userDao()
+                val quest = INSTANCE?.questDao()
                 val admin = User(
                     userId = 0,
                     firstName = "Ritz Vincent",
@@ -56,7 +58,23 @@ abstract class AppDatabase : RoomDatabase() {
                 )
 
                 CoroutineScope(Dispatchers.IO).launch {
-                    dao?.insert(user = admin)
+                    user?.insert(user = admin)
+                    quest?.insert(Quest(
+                        questId = 0,
+                        originUserId = 1,
+                        name = "Android 101",
+                        description = "Test your knowledge in the field of Android programming. " +
+                                "A beginner friendly and a refresher.",
+                        questType = QuestType.EASY
+                    ))
+                    quest?.insert(Quest(
+                        questId = 0,
+                        originUserId = 1,
+                        name = "Math 101",
+                        description = "A basic true or false question for basic math knowledge " +
+                                "such as integers, absolute value and more.",
+                        questType = QuestType.EASY
+                    ))
                 }
             }
         }
