@@ -11,15 +11,19 @@ import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.model.relationship.UserQuests
 import tech.ritzvincentculanag.intelliquest.repository.UserRepository
 
-class QuestViewModel(private val application: Application) : ViewModel() {
+class QuestViewModel(application: Application) : ViewModel() {
 
     private val userRepository: UserRepository = UserRepository(AppDatabase.getDatabase(application).userDao())
     private val userQuests: Flow<List<UserQuests>> = userRepository.getUserQuests()
 
     fun getUserQuests(userId: Int): Flow<List<Quest>> {
-        val userQuestsFlow = flow<List<Quest>> {
+        val userQuestsFlow = flow {
             userQuests.collect {
-                emit(it[userId].quests)
+                it.forEach {  userQuest ->
+                    if (userQuest.user.userId == userId) {
+                        emit(userQuest.quests)
+                    }
+                }
             }
         }
 
