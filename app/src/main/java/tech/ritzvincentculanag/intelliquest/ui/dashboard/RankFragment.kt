@@ -42,12 +42,11 @@ class RankFragment : Fragment() {
         val users = viewModel.getUsers()
         val adapter = RankAdapter()
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             users.collect { users ->
                 adapter.setUsers(users)
             }
         }
-
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
