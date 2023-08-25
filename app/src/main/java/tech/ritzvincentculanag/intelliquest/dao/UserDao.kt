@@ -4,9 +4,11 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import tech.ritzvincentculanag.intelliquest.model.User
+import tech.ritzvincentculanag.intelliquest.model.relationship.UserQuests
 
 @Dao
 interface UserDao {
@@ -28,5 +30,9 @@ interface UserDao {
 
     @Query("SELECT * FROM Users")
     fun getUsers(): Flow<List<User>>
+
+    @Transaction
+    @Query("SELECT * FROM Users")
+    fun getUserQuests(): Flow<List<UserQuests>>
 
 }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 import tech.ritzvincentculanag.intelliquest.model.User
+import tech.ritzvincentculanag.intelliquest.model.relationship.UserQuests
 import tech.ritzvincentculanag.intelliquest.repository.UserRepository
 import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
@@ -24,6 +25,7 @@ class UserViewModel(private val application: Application) : ViewModel() {
     private val sessionManager = SessionManager(application.applicationContext)
     private val repository: UserRepository = UserRepository(AppDatabase.getDatabase(application).userDao())
     private val users: Flow<List<User>> = repository.getUsers()
+    private val userQuests: Flow<List<UserQuests>> = repository.getUserQuests()
 
     var inputUsername = MutableLiveData<String>()
     var inputPassword = MutableLiveData<String>()
@@ -52,8 +54,6 @@ class UserViewModel(private val application: Application) : ViewModel() {
         }
     }
 
-    fun getUsers(): Flow<List<User>> = users
-
     fun getUser(username: String, password: String): Flow<User?> {
         val userFlow = flow {
             val user = repository.getUser(username, password)
@@ -71,6 +71,10 @@ class UserViewModel(private val application: Application) : ViewModel() {
 
         return userFlow.flowOn(Dispatchers.IO)
     }
+
+    fun getUsers(): Flow<List<User>> = users
+
+    fun getUserQuests(): Flow<List<UserQuests>> = userQuests
 
     fun registerUser() {
         val user = User(
