@@ -3,6 +3,7 @@ package tech.ritzvincentculanag.intelliquest.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import tech.ritzvincentculanag.intelliquest.LoginActivity
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityIntroductionBinding
 import tech.ritzvincentculanag.intelliquest.model.adapter.IntroductionAdapter
 import tech.ritzvincentculanag.intelliquest.util.SessionManager
@@ -20,7 +21,7 @@ class Introduction : AppCompatActivity() {
         adapter = IntroductionAdapter()
         sessionManager = SessionManager(applicationContext)
 
-        if (sessionManager.userIsActive() || sessionManager.hasSkipIntroduction()) {
+        if (sessionManager.userIsActive() && sessionManager.hasSkipIntroduction()) {
             showDashboard()
         }
 
@@ -35,6 +36,11 @@ class Introduction : AppCompatActivity() {
 
     private fun setListeners() {
         binding.actionSkip.setOnClickListener {
+            if (!sessionManager.userIsActive()) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                return@setOnClickListener
+            }
+
             sessionManager.skipIntroduction()
             showDashboard()
         }
