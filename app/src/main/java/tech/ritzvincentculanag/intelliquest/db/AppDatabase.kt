@@ -9,9 +9,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.dao.UserDao
+import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.model.User
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class, Quest::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
