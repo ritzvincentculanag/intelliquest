@@ -17,4 +17,8 @@ data class User(
     var middleName: String,
     var username: String,
     var password: String
-) : Parcelable
+) : Parcelable {
+
+    fun getFullName(): String = "$firstName ${middleName.get(0)}. $lastName"
+
+}
