@@ -1,12 +1,10 @@
 package tech.ritzvincentculanag.intelliquest.viewmodel
 
-import android.app.Activity
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -86,19 +84,6 @@ class UserViewModel(private val application: Application) : ViewModel() {
         )
 
         insert(user)
-    }
-
-    fun logout(activity: Activity) {
-        MaterialAlertDialogBuilder(activity)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout?")
-            .setPositiveButton("Yes") { _, _ ->
-                sessionManager.clearSession()
-            }
-            .setNegativeButton("No") { _, _ ->
-
-            }
-            .show()
     }
 
     fun login(view: View): Boolean {
