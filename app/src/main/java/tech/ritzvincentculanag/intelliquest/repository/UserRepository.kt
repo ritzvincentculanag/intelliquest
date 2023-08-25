@@ -24,6 +24,10 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUser(username, password)
     }
 
+    suspend fun getUser(userId: Int): User {
+        return userDao.getUser(userId)
+    }
+
     fun getUsers(): Flow<List<User>> = users
 
 }
