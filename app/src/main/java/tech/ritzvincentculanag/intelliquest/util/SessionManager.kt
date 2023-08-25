@@ -36,6 +36,10 @@ class SessionManager(context: Context) {
         preferencesEditor.commit()
     }
 
+    fun getInt(key: String): Int {
+        return preferences.getInt(key, -1)
+    }
+
     fun userIsActive(): Boolean = preferences.getBoolean(USER_ACTIVE, false)
 
     fun hasSkipIntroduction(): Boolean = preferences.getBoolean(SKIP_INTRODUCTION, false)
