@@ -14,6 +14,7 @@ data class Quest(
 
     var name: String,
     var description: String,
-    var isFinished: Boolean,
-    var questType: QuestType
+    var questType: QuestType,
+    var isFinished: Boolean = false,
+    var isPublic: Boolean = true
 ) : Parcelable
