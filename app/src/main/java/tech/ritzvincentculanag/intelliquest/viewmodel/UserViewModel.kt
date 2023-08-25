@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 import tech.ritzvincentculanag.intelliquest.model.User
 import tech.ritzvincentculanag.intelliquest.repository.UserRepository
@@ -96,19 +97,25 @@ class UserViewModel(private val application: Application) : ViewModel() {
             .show()
     }
 
-    suspend fun login(view: View) {
+    fun login(view: View): Boolean {
         val username = inputUsername.value!!
         val password = inputPassword.value!!
+        var isLoggedIn = false
 
-        getUser(username, password).collect { user ->
-            if (user == null) {
-                Snacks.shortSnack(view, "User not found")
-                return@collect
+        runBlocking {
+            getUser(username, password).collect { user ->
+                if (user == null) {
+                    Snacks.shortSnack(view, "User not found")
+                    return@collect
+                }
+
+                isLoggedIn = true
+                sessionManager.saveSession(user)
+                Snacks.shortSnack(view, "Welcome user!")
             }
-
-            sessionManager.saveSession(user)
-            Snacks.shortSnack(view, "Welcome user!")
         }
+
+        return isLoggedIn
     }
 
 }
