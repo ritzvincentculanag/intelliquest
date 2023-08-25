@@ -59,7 +59,7 @@
             android:textAlignment="center"
             android:textColor="?attr/colorTertiary"
             android:textSize="80sp"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintBottom_toTopOf="@+id/actionUpdateProfile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/actionUpdateProfile"
             style="?attr/materialIconButtonFilledTonalStyle"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -87,7 +87,7 @@
             android:layout_marginTop="64dp"
             android:layout_marginEnd="24dp"
             android:text="Update profile"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintBottom_toTopOf="@+id/actionLogout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
             app:layout_constraintVertical_bias="0.5" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/actionLogout"
             style="?attr/materialIconButtonFilledTonalStyle"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -107,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintTop_toBottomOf="@+id/actionUpdateProfile" />
 
         <View
             android:id="@+id/divider2"
@@ -119,10 +119,10 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
+            app:layout_constraintTop_toBottomOf="@+id/actionLogout" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/actionDeleteProfile"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="32dp"
