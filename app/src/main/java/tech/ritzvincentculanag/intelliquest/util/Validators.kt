@@ -31,5 +31,18 @@ class Validators {
 
             return isValid
         }
+
+        fun fieldIsEmpty(field: TextInputLayout): Boolean {
+            val input = field.editText?.text.toString().trim()
+            val inputIsEmpty = input.isEmpty()
+
+            if (inputIsEmpty) {
+                setError(field)
+            } else {
+                clearError(field)
+            }
+
+            return inputIsEmpty
+        }
     }
 }
