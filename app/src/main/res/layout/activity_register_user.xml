@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel" />
+            type="tech.ritzvincentculanag.intelliquest.viewmodel.RegisterUserViewModel" />
     </data>
 
     <ScrollView
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="First Name"
-                    android:text="@={viewModel.inputRegFirstName}" />
+                    android:text="@={viewModel.inputFirstName}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -56,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Last Name"
-                    android:text="@={viewModel.inputRegLastName}" />
+                    android:text="@={viewModel.inputLastName}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Middle Name (Optional)"
-                    android:text="@={viewModel.inputRegMiddleName}" />
+                    android:text="@={viewModel.inputMiddleName}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
-                    android:text="@={viewModel.inputRegUsername}" />
+                    android:text="@={viewModel.inputUsername}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -138,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
-                    android:text="@={viewModel.inputRegPassword}" />
+                    android:text="@={viewModel.inputPassword}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
