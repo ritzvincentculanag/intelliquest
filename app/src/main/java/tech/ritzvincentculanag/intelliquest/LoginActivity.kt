@@ -5,13 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityLoginBinding
-import tech.ritzvincentculanag.intelliquest.factory.LoginViewModelFactory
 import tech.ritzvincentculanag.intelliquest.ui.Dashboard
 import tech.ritzvincentculanag.intelliquest.ui.RegisterUser
 import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.fieldIsEmpty
 import tech.ritzvincentculanag.intelliquest.viewmodel.LoginViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.LoginViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
 

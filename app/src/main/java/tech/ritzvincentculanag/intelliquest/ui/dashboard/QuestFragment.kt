@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentQuestBinding
-import tech.ritzvincentculanag.intelliquest.factory.QuestViewModelFactory
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.QuestViewModelFactory
 import tech.ritzvincentculanag.intelliquest.model.adapter.QuestAdapter
 import tech.ritzvincentculanag.intelliquest.viewmodel.QuestViewModel
 

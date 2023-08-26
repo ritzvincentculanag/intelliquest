@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentRankBinding
-import tech.ritzvincentculanag.intelliquest.factory.UserViewModelFactory
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.UserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.model.adapter.RankAdapter
 import tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel
 

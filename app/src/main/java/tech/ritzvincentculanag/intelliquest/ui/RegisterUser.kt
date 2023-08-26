@@ -8,7 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import tech.ritzvincentculanag.intelliquest.LoginActivity
 import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityRegisterUserBinding
-import tech.ritzvincentculanag.intelliquest.factory.RegisterUserViewModelFactory
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.RegisterUserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.validateField
 import tech.ritzvincentculanag.intelliquest.viewmodel.RegisterUserViewModel

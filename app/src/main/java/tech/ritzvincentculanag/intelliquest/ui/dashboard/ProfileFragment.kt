@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.LoginActivity
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentProfileBinding
-import tech.ritzvincentculanag.intelliquest.factory.UserViewModelFactory
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.UserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel

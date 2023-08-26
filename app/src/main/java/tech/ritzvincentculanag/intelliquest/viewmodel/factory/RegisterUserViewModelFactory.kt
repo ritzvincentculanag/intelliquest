@@ -1,4 +1,4 @@
-package tech.ritzvincentculanag.intelliquest.factory
+package tech.ritzvincentculanag.intelliquest.viewmodel.factory
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
