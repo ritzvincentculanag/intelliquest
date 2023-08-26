@@ -48,8 +48,8 @@ class LoginActivity : AppCompatActivity() {
     private fun setOnClickListeners() {
         binding.actionLogin.setOnClickListener {
             if (
-                !fieldIsEmpty(binding.containerUsername) &&
-                !fieldIsEmpty(binding.containerUsername)
+                fieldIsEmpty(binding.containerUsername) &&
+                fieldIsEmpty(binding.containerPassword)
             ) {
                 Snacks.shortSnack(binding.root)
                 return@setOnClickListener
