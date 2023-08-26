@@ -33,8 +33,8 @@ class LoginViewModel(private val application: Application) : ViewModel() {
     }
 
     fun login(view: View): Boolean {
-        val username = inputUsername.value!!
-        val password = inputPassword.value!!
+        val username = inputUsername.value ?: ""
+        val password = inputPassword.value ?: ""
         var isLoggedIn = false
 
         runBlocking {
@@ -46,7 +46,6 @@ class LoginViewModel(private val application: Application) : ViewModel() {
 
                 isLoggedIn = true
                 session.saveSession(user)
-                Snacks.shortSnack(view, "Welcome user!")
             }
         }
 
