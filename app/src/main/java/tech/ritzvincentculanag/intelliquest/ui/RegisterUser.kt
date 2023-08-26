@@ -39,22 +39,25 @@ class RegisterUser : AppCompatActivity() {
         binding.actionRegister.setOnClickListener {
             val firstNameIsValid = validateField(binding.containerFirstName, PATTERN_NAME)
             val lastNameIsValid = validateField(binding.containerLastName, PATTERN_NAME)
-            val middleNameIsValid = validateField(binding.containerMiddleName, PATTERN_NAME)
             val usernameIsValid = validateField(binding.containerRegUsername, PATTERN_USERNAME)
             val passwordIsValid = validateField(binding.containerRegPassword, PATTERN_PASSWORD)
 
             if (
                 !firstNameIsValid ||
                 !lastNameIsValid ||
-                !middleNameIsValid ||
                 !usernameIsValid ||
                 !passwordIsValid
             ) {
-                Snacks.shortSnack(
-                    view = binding.root,
-                    message = "Some fields have invalid value"
-                )
+                showInvalidMessage()
                 return@setOnClickListener
+            }
+
+            if (binding.inputMiddleName.text.toString().isNotEmpty()) {
+                val middleNameIsValid = validateField(binding.containerMiddleName, PATTERN_NAME)
+                if (!middleNameIsValid) {
+                    showInvalidMessage()
+                    return@setOnClickListener
+                }
             }
 
             MaterialAlertDialogBuilder(this)
@@ -139,6 +142,13 @@ class RegisterUser : AppCompatActivity() {
             )
             false
         }
+    }
+
+    private fun showInvalidMessage() {
+        Snacks.shortSnack(
+            view = binding.root,
+            message = "Some fields have invalid value"
+        )
     }
 
 }
