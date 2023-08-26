@@ -9,7 +9,11 @@
         android:id="@+id/campFragment"
         android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.CampFragment"
         android:label="fragment_camp"
-        tools:layout="@layout/fragment_camp" />
+        tools:layout="@layout/fragment_camp" >
+        <action
+            android:id="@+id/action_campFragment_to_createQuest"
+            app:destination="@id/createQuest" />
+    </fragment>
     <fragment
         android:id="@+id/questFragment"
         android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.QuestFragment"
@@ -25,4 +29,9 @@
         android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/createQuest"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.CreateQuest"
+        android:label="fragment_create_quest"
+        tools:layout="@layout/fragment_create_quest" />
 </navigation>
