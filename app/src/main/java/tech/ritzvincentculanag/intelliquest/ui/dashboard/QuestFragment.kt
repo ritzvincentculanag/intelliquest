@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentQuestBinding
 import tech.ritzvincentculanag.intelliquest.factory.QuestViewModelFactory
 import tech.ritzvincentculanag.intelliquest.model.adapter.QuestAdapter
-import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.viewmodel.QuestViewModel
 
 class QuestFragment : Fragment() {
@@ -41,16 +40,25 @@ class QuestFragment : Fragment() {
 
     private fun setupRecyclerView() {
         val adapter = QuestAdapter()
-        val session = SessionManager(requireContext())
-        val userId = session.getInt("USER_ID")
-
-        CoroutineScope(Dispatchers.Default).launch {
-            viewModel.getUserQuests(userId).collect {
-                adapter.setQuests(it)
-            }
-        }
         binding.questList.adapter = adapter
         binding.questList.layoutManager = LinearLayoutManager(requireContext())
+
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.getQuests().collect {
+                adapter.setQuests(it)
+                showNoQuests(adapter)
+            }
+        }
+    }
+
+    private fun showNoQuests(adapter: QuestAdapter) {
+        if (adapter.itemCount == 0) {
+            binding.noQuestCover.visibility = View.VISIBLE
+            binding.noQuestLabel.visibility = View.VISIBLE
+        } else {
+            binding.noQuestCover.visibility = View.INVISIBLE
+            binding.noQuestLabel.visibility = View.INVISIBLE
+        }
     }
 
 }
