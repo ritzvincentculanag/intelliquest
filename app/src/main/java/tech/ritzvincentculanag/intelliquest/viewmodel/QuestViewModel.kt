@@ -8,26 +8,21 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 import tech.ritzvincentculanag.intelliquest.model.Quest
-import tech.ritzvincentculanag.intelliquest.model.relationship.UserQuests
-import tech.ritzvincentculanag.intelliquest.repository.UserRepository
+import tech.ritzvincentculanag.intelliquest.repository.QuestRepository
 
 class QuestViewModel(application: Application) : ViewModel() {
 
-    private val userRepository: UserRepository = UserRepository(AppDatabase.getDatabase(application).userDao())
-    private val userQuests: Flow<List<UserQuests>> = userRepository.getUserQuests()
+    private val repository: QuestRepository = QuestRepository(AppDatabase.getDatabase(application).questDao())
+    private val userQuests: Flow<List<Quest>> = repository.getQuests()
 
-    fun getUserQuests(userId: Int): Flow<List<Quest>> {
+    fun getQuests(): Flow<List<Quest>> {
         val userQuestsFlow = flow {
             userQuests.collect {
-                it.forEach {  userQuest ->
-                    if (userQuest.user.userId == userId) {
-                        emit(userQuest.quests)
-                    }
-                }
+                emit(it)
             }
         }
 
-        return userQuestsFlow.flowOn(Dispatchers.Default)
+        return userQuestsFlow.flowOn(Dispatchers.Main)
     }
 
 }
