@@ -38,11 +38,23 @@ class RegisterUser : AppCompatActivity() {
 
     private fun setOnClickListeners() {
         binding.actionRegister.setOnClickListener {
+            val firstNameIsValid = validateField(binding.containerFirstName, PATTERN_NAME)
+            val lastNameIsValid = validateField(binding.containerLastName, PATTERN_NAME)
+            val usernameIsValid = validateField(
+                field = binding.containerRegUsername,
+                message = getString(R.string.validation_username_message),
+                pattern = PATTERN_USERNAME
+            )
+            val passwordIsValid = validateField(
+                field = binding.containerRegPassword,
+                message = getString(R.string.validation_password_message),
+                pattern = PATTERN_PASSWORD
+            )
             if (
-                !validateField(binding.containerFirstName, PATTERN_NAME) ||
-                !validateField(binding.containerLastName, PATTERN_NAME) ||
-                !validateField(binding.containerRegUsername, PATTERN_USERNAME) ||
-                !validateField(binding.containerRegPassword, PATTERN_PASSWORD)
+                !firstNameIsValid ||
+                !lastNameIsValid ||
+                !usernameIsValid ||
+                !passwordIsValid
             ) {
                 showInvalidMessage()
                 return@setOnClickListener
