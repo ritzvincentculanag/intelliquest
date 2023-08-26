@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
             Validators.setError(field)
             false
         } else {
-            Validators.clearErrors(field)
+            Validators.clearError(field)
             true
         }
     }
