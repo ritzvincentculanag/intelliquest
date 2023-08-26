@@ -1,17 +1,17 @@
 package tech.ritzvincentculanag.intelliquest.ui
 
-import android.content.Intent
+import  android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputLayout
 import tech.ritzvincentculanag.intelliquest.LoginActivity
+import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityRegisterUserBinding
-import tech.ritzvincentculanag.intelliquest.factory.UserViewModelFactory
+import tech.ritzvincentculanag.intelliquest.factory.RegisterUserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.util.Snacks
-import tech.ritzvincentculanag.intelliquest.util.Validators
-import tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel
+import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.validateField
+import tech.ritzvincentculanag.intelliquest.viewmodel.RegisterUserViewModel
 
 private const val PATTERN_NAME = "^[A-Z][a-z]{2,29}( [A-Z][a-z]{2,29})?( [A-Z])?$"
 private const val PATTERN_PASSWORD = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$"
@@ -20,33 +20,29 @@ private const val PATTERN_USERNAME = "^[a-z][a-z_]{7,}$"
 class RegisterUser : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterUserBinding
-    private lateinit var viewModel: UserViewModel
-    private lateinit var factory: UserViewModelFactory
+    private lateinit var viewModel: RegisterUserViewModel
+    private lateinit var factory: RegisterUserViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        factory = UserViewModelFactory(application)
-        viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
+        factory = RegisterUserViewModelFactory(application)
+        viewModel = ViewModelProvider(this, factory)[RegisterUserViewModel::class.java]
         binding = ActivityRegisterUserBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
 
-        setListeners()
+        setOnClickListeners()
+        setOnFocusChangeListeners()
         setContentView(binding.root)
     }
 
-    private fun setListeners() {
+    private fun setOnClickListeners() {
         binding.actionRegister.setOnClickListener {
-            val firstNameIsValid = validateField(binding.containerFirstName, PATTERN_NAME)
-            val lastNameIsValid = validateField(binding.containerLastName, PATTERN_NAME)
-            val usernameIsValid = validateField(binding.containerRegUsername, PATTERN_USERNAME)
-            val passwordIsValid = validateField(binding.containerRegPassword, PATTERN_PASSWORD)
-
             if (
-                !firstNameIsValid ||
-                !lastNameIsValid ||
-                !usernameIsValid ||
-                !passwordIsValid
+                !validateField(binding.containerFirstName, PATTERN_NAME) ||
+                !validateField(binding.containerLastName, PATTERN_NAME) ||
+                !validateField(binding.containerRegUsername, PATTERN_USERNAME) ||
+                !validateField(binding.containerRegPassword, PATTERN_PASSWORD)
             ) {
                 showInvalidMessage()
                 return@setOnClickListener
@@ -61,17 +57,20 @@ class RegisterUser : AppCompatActivity() {
             }
 
             MaterialAlertDialogBuilder(this)
-                .setTitle("Register")
-                .setMessage("Proceed to registration?")
-                .setPositiveButton("Yes") { _, _ ->
-                    viewModel.registerUser()
+                .setTitle(getString(R.string.dialog_register_title))
+                .setMessage(getString(R.string.dialog_register_message))
+                .setPositiveButton(getString(R.string.dialog_positive_button_title)) { _, _ ->
+                    viewModel.insertUser()
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
-                .setNegativeButton("Cancel") { _, _ ->
+                .setNegativeButton(getString(R.string.dialog_negative_button_title)) { _, _ ->
 
                 }
                 .show()
         }
+    }
+
+    private fun setOnFocusChangeListeners() {
         binding.inputFirstName.setOnFocusChangeListener { _, focused ->
             if (!focused) {
                 validateField(
@@ -103,9 +102,7 @@ class RegisterUser : AppCompatActivity() {
                 validateField(
                     field = binding.containerRegUsername,
                     pattern = PATTERN_USERNAME,
-                    message = "Username must be all lowercase, " +
-                            "must be at least 8 characters long, " +
-                            "and is separated by underscore"
+                    message = getString(R.string.validation_username_message)
                 )
             }
         }
@@ -114,40 +111,16 @@ class RegisterUser : AppCompatActivity() {
                 validateField(
                     field = binding.containerRegPassword,
                     pattern = PATTERN_PASSWORD,
-                    message = "Password must be " +
-                            "at least 8 characters long, " +
-                            "has at least 1 special character, " +
-                            "an uppercase letter, " +
-                            "and a lowercase letter."
+                    message = getString(R.string.validation_password_message)
                 )
             }
-        }
-    }
-
-    private fun validateField(
-        field: TextInputLayout,
-        pattern: String,
-        message: String = "Invalid field"
-    ): Boolean {
-        val input = field.editText?.text.toString().trim()
-        val regex = Regex(pattern)
-
-        return if (regex.matches(input)) {
-            Validators.clearErrors(field)
-            true
-        } else {
-            Validators.setError(
-                field = field,
-                message = message
-            )
-            false
         }
     }
 
     private fun showInvalidMessage() {
         Snacks.shortSnack(
             view = binding.root,
-            message = "Some fields have invalid value"
+            message = getString(R.string.validation_default_message_register)
         )
     }
 
