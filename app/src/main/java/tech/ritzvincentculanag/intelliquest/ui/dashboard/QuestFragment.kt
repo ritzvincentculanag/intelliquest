@@ -11,9 +11,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentQuestBinding
-import tech.ritzvincentculanag.intelliquest.viewmodel.factory.QuestViewModelFactory
 import tech.ritzvincentculanag.intelliquest.model.adapter.QuestAdapter
 import tech.ritzvincentculanag.intelliquest.viewmodel.QuestViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.QuestViewModelFactory
 
 class QuestFragment : Fragment() {
 
@@ -52,7 +52,7 @@ class QuestFragment : Fragment() {
     }
 
     private fun showNoQuests(adapter: QuestAdapter) {
-        if (adapter.itemCount == 0) {
+        if (adapter.itemCount > 0) {
             binding.noQuestCover.visibility = View.VISIBLE
             binding.noQuestLabel.visibility = View.VISIBLE
         } else {
