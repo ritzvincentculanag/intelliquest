@@ -5,16 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import tech.ritzvincentculanag.intelliquest.R
+import androidx.navigation.fragment.findNavController
+import tech.ritzvincentculanag.intelliquest.databinding.FragmentCreateQuestBinding
 
 class CreateQuest : Fragment() {
+
+    private lateinit var binding: FragmentCreateQuestBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_quest, container, false)
+    ): View {
+        setupFragment()
+        setupTopAppBar()
+
+        return binding.root
+    }
+
+    private fun setupFragment() {
+        binding = FragmentCreateQuestBinding.inflate(layoutInflater)
+    }
+
+    private fun setupTopAppBar() {
+        binding.materialToolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 }
