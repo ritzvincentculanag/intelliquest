@@ -110,7 +110,7 @@
                     android:checked="@={viewModel.inputPublic}"
                     android:text="Public"
                     app:layout_constraintStart_toStartOf="@+id/optionTime"
-                    app:layout_constraintTop_toBottomOf="@+id/optionTime" />
+                    app:layout_constraintTop_toBottomOf="@+id/containerDuration" />
 
                 <View
                     android:id="@+id/divider4"
