@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -44,7 +45,6 @@ android {
 dependencies {
     val room_version = "2.5.2"
     val nav_version = "2.6.0"
-    val lifecycle_version = "2.6.1"
 
     // Room
     implementation("androidx.room:room-runtime:$room_version")
