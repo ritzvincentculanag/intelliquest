@@ -5,17 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import tech.ritzvincentculanag.intelliquest.R
+import tech.ritzvincentculanag.intelliquest.databinding.FragmentCampBinding
 
 
 class CampFragment : Fragment() {
 
+    private lateinit var binding: FragmentCampBinding
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_camp, container, false)
+    ): View {
+        setupFragment()
+        setOnClickListeners()
+
+        return binding.root
+    }
+
+    private fun setupFragment() {
+        binding = FragmentCampBinding.inflate(layoutInflater)
+    }
+
+    private fun setOnClickListeners() {
+        binding.campCreateQuest.setOnClickListener {
+            findNavController().navigate(R.id.action_campFragment_to_createQuest)
+        }
     }
 
 }
