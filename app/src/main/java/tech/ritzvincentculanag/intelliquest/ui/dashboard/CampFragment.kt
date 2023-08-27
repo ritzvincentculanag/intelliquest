@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentCampBinding
+import tech.ritzvincentculanag.intelliquest.model.QuestState
 
 
 class CampFragment : Fragment() {
@@ -31,7 +31,8 @@ class CampFragment : Fragment() {
 
     private fun setOnClickListeners() {
         binding.campCreateQuest.setOnClickListener {
-            findNavController().navigate(R.id.action_campFragment_to_createQuest)
+            val goToCreateQuest = CampFragmentDirections.actionCampFragmentToCreateQuest(QuestState())
+            findNavController().navigate(goToCreateQuest)
         }
     }
 
