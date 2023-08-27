@@ -4,10 +4,7 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 import tech.ritzvincentculanag.intelliquest.model.User
@@ -24,12 +21,7 @@ class LoginViewModel(private val application: Application) : ViewModel() {
     var inputPassword = MutableLiveData<String>()
 
     private fun getUser(username: String, password: String): Flow<User?> {
-        val userFlow = flow {
-            val user = userRepository.getUser(username, password)
-            emit(user)
-        }
-
-        return userFlow.flowOn(Dispatchers.IO)
+        return userRepository.getUser(username, password)
     }
 
     fun login(view: View): Boolean {

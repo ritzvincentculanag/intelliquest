@@ -22,11 +22,11 @@ class UserRepository(private val userDao: UserDao) {
         userDao.delete(user)
     }
 
-    suspend fun getUser(username: String, password: String): User {
+    fun getUser(username: String, password: String): Flow<User> {
         return userDao.getUser(username, password)
     }
 
-    suspend fun getUser(userId: Int): User {
+    fun getUser(userId: Int): Flow<User> {
         return userDao.getUser(userId)
     }
 

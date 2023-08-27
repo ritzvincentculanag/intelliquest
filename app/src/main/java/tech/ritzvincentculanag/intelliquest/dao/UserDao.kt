@@ -23,10 +23,10 @@ interface UserDao {
     suspend fun delete(user: User)
 
     @Query("SELECT * FROM Users WHERE username = :username AND PASSWORD = :password")
-    suspend fun getUser(username: String, password: String): User
+    fun getUser(username: String, password: String): Flow<User>
 
     @Query("SELECT * FROM Users WHERE userId = :userId")
-    suspend fun getUser(userId: Int): User
+    fun getUser(userId: Int): Flow<User>
 
     @Query("SELECT * FROM Users")
     fun getUsers(): Flow<List<User>>

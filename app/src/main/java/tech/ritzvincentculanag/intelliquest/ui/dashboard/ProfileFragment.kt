@@ -80,7 +80,7 @@ class ProfileFragment : Fragment() {
                     CoroutineScope(Dispatchers.IO).launch {
                         val userId = sessionManager.getInt("USER_ID")
                         viewModel.getUser(userId).collect {
-                            viewModel.delete(it!!)
+                            viewModel.delete(it)
                             startActivity(Intent(requireContext(), LoginActivity::class.java))
                             onDestroy()
                         }
