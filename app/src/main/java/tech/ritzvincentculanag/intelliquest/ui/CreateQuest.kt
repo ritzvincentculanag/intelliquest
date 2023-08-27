@@ -6,15 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentCreateQuestBinding
 import tech.ritzvincentculanag.intelliquest.model.QuestType
+import tech.ritzvincentculanag.intelliquest.util.Validators
+import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.fieldIsEmpty
+import tech.ritzvincentculanag.intelliquest.viewmodel.CreateQuestViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.CreateQuestViewModelFactory
 
 class CreateQuest : Fragment() {
 
     private val args by navArgs<CreateQuestArgs>()
+
     private lateinit var binding: FragmentCreateQuestBinding
+    private lateinit var factory: CreateQuestViewModelFactory
+    private lateinit var viewModel: CreateQuestViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,12 +32,17 @@ class CreateQuest : Fragment() {
         setupTopAppBar()
         setupQuestType()
         setupOnClickListeners()
+        setupObservers()
+        setupOnFocusChangeListeners()
 
         return binding.root
     }
 
     private fun setupFragment() {
+        factory = CreateQuestViewModelFactory(requireActivity().application)
+        viewModel = ViewModelProvider(this, factory)[CreateQuestViewModel::class.java]
         binding = FragmentCreateQuestBinding.inflate(layoutInflater)
+        binding.viewModel = viewModel
 
         if (args.questState.isCreating) {
             binding.actionCreateQuestion.visibility = View.INVISIBLE
@@ -55,12 +68,54 @@ class CreateQuest : Fragment() {
     }
 
     private fun setupOnClickListeners() {
-        binding.optionTime.setOnCheckedChangeListener { _, isChecked ->
-            if (!isChecked) {
-                binding.inputDuration.text?.clear()
-            }
-            binding.inputDuration.isEnabled = isChecked
+        binding.actionCreate.setOnClickListener {
+
         }
     }
 
+    private fun setupObservers() {
+        viewModel.inputTimed.observe(viewLifecycleOwner) { isTimed ->
+            if (!isTimed) {
+                binding.inputDuration.text?.clear()
+            }
+            binding.inputDuration.isEnabled = isTimed ?: false
+        }
+    }
+
+    private fun setupOnFocusChangeListeners() {
+        binding.inputTitle.setOnFocusChangeListener { _, isFocused ->
+            if (!isFocused) {
+                fieldIsEmpty(binding.containerTitle)
+            }
+        }
+        binding.inputDescription.setOnFocusChangeListener { _, isFocused ->
+            if (!isFocused) {
+                fieldIsEmpty(binding.containerDescription)
+            }
+        }
+        binding.inputQuestType.setOnFocusChangeListener { _, isFocused ->
+            if (!isFocused) {
+                fieldIsEmpty(binding.containerQuestType)
+            }
+        }
+        binding.inputDuration.setOnFocusChangeListener { _, isFocused ->
+            if (isFocused) {
+                return@setOnFocusChangeListener
+            }
+
+            if (fieldIsEmpty(binding.containerDuration)) {
+                return@setOnFocusChangeListener
+            }
+
+            val duration = binding.inputDuration.text?.toString()?.trim()?.toInt() ?: 0
+            if (duration < 10 || duration > 60) {
+                Validators.setError(
+                    field = binding.containerDuration,
+                    message = "Minimum is 10 and maximum is 60"
+                )
+            } else {
+                Validators.clearError(binding.containerDuration)
+            }
+        }
+    }
 }
