@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentCreateQuestBinding
 import tech.ritzvincentculanag.intelliquest.model.QuestType
 
 class CreateQuest : Fragment() {
 
+    private val args by navArgs<CreateQuestArgs>()
     private lateinit var binding: FragmentCreateQuestBinding
 
     override fun onCreateView(
@@ -28,6 +30,11 @@ class CreateQuest : Fragment() {
 
     private fun setupFragment() {
         binding = FragmentCreateQuestBinding.inflate(layoutInflater)
+
+        if (args.questState.isCreating) {
+            binding.actionCreateQuestion.visibility = View.INVISIBLE
+            binding.actionDeleteQuest.visibility = View.INVISIBLE
+        }
     }
 
     private fun setupTopAppBar() {
