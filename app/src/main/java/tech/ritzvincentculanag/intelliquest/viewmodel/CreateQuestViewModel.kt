@@ -37,7 +37,7 @@ class CreateQuestViewModel(private val application: Application) : ViewModel() {
                 description = inputDescription.value ?: "",
                 questType = QuestType.valueOf(inputQuestType.value ?: "EASY"),
                 isTimed = inputTimed.value ?: false,
-                isPublic = inputPublic.value ?: true
+                isPublic = inputPublic.value ?: false
             ))
 
             emit(questId)
