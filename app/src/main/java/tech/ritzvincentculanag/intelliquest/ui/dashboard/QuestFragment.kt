@@ -40,13 +40,16 @@ class QuestFragment : Fragment() {
 
     private fun setupRecyclerView() {
         val adapter = QuestAdapter()
+
         binding.questList.adapter = adapter
         binding.questList.layoutManager = LinearLayoutManager(requireContext())
 
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             viewModel.getQuests().collect {
-                adapter.setQuests(it)
-                showNoQuests(adapter)
+                activity?.runOnUiThread {
+                    adapter.setQuests(it)
+                    showNoQuests(adapter)
+                }
             }
         }
     }
