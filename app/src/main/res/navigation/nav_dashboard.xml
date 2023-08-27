@@ -33,5 +33,9 @@
         android:id="@+id/createQuest"
         android:name="tech.ritzvincentculanag.intelliquest.ui.CreateQuest"
         android:label="fragment_create_quest"
-        tools:layout="@layout/fragment_create_quest" />
+        tools:layout="@layout/fragment_create_quest" >
+        <argument
+            android:name="questState"
+            app:argType="tech.ritzvincentculanag.intelliquest.model.QuestState" />
+    </fragment>
 </navigation>
