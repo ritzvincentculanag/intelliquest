@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.ActivityLoginBinding
 import tech.ritzvincentculanag.intelliquest.ui.Dashboard
 import tech.ritzvincentculanag.intelliquest.ui.RegisterUser
@@ -55,8 +58,12 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (viewModel.login(binding.root)) {
-                startActivity(Intent(this, Dashboard::class.java))
+            CoroutineScope(Dispatchers.Default).launch {
+                viewModel.login(binding.root).collect { isLoggedIn ->
+                    if (isLoggedIn) {
+                        goToDashboard()
+                    }
+                }
             }
         }
         binding.actionSignup.setOnClickListener {
@@ -75,6 +82,10 @@ class LoginActivity : AppCompatActivity() {
                 fieldIsEmpty(binding.containerPassword)
             }
         }
+    }
+
+    private fun goToDashboard() {
+        startActivity(Intent(this, Dashboard::class.java))
     }
 
 }
