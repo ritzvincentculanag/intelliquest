@@ -177,46 +177,32 @@
                     app:layout_constraintTop_toBottomOf="@+id/optionPublic" />
 
                 <Button
-                    android:id="@+id/actionViewChallenges"
-                    style="?attr/materialIconButtonFilledTonalStyle"
+                    android:id="@+id/actionCreateChallenges"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="32dp"
-                    android:enabled="false"
-                    android:text="View challenges"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="8dp"
+                    android:text="Create challenges"
+                    app:layout_constraintBottom_toTopOf="@+id/actionDeleteQuest"
                     app:layout_constraintEnd_toEndOf="@+id/actionCreate"
                     app:layout_constraintStart_toStartOf="@+id/actionCreate"
                     app:layout_constraintTop_toBottomOf="@+id/actionCreate" />
+
+                <Button
+                    android:backgroundTint="?attr/colorError"
+                    android:id="@+id/actionDeleteQuest"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="32dp"
+                    android:text="Delete quest"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/actionCreateChallenges"
+                    app:layout_constraintStart_toStartOf="@+id/actionCreateChallenges" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/actionCreateQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom|right"
-            android:layout_margin="24dp"
-            android:clickable="true"
-            android:text="Create challenge"
-            app:icon="@drawable/ic_challenge" />
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/actionDeleteQuest"
-            style="?attr/floatingActionButtonSmallStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="92dp"
-            android:backgroundTint="?attr/colorErrorContainer"
-            android:clickable="true"
-            android:contentDescription="Delete quest"
-            android:src="@drawable/ic_delete" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
