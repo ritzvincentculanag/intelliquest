@@ -75,6 +75,26 @@ abstract class AppDatabase : RoomDatabase() {
                                 "such as integers, absolute value and more.",
                         questType = QuestType.EASY
                     ))
+                    quest?.insert(Quest(
+                        questId = 0,
+                        originUserId = 1,
+                        name = "Math 102",
+                        description = "Revisit all the concepts you've learned in math through " +
+                                "a multiple choice quest!",
+                        questType = QuestType.MEDIUM,
+                        isTimed = true,
+                        timeDuration = 10
+                    ))
+                    quest?.insert(Quest(
+                        questId = 0,
+                        originUserId = 1,
+                        name = "Java 101",
+                        description = "Think you're knowledgeable enough? Try this Java quest to " +
+                                "see how much concept and knowledge you know in the language.",
+                        questType = QuestType.HARD,
+                        isTimed = true,
+                        timeDuration = 10
+                    ))
                 }
             }
         }
