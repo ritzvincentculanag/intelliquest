@@ -11,10 +11,12 @@ data class Quest(
     @PrimaryKey(autoGenerate = true)
     var questId: Int,
     var originUserId: Int,
+    var timeDuration: Int = 15,
 
     var name: String,
     var description: String,
     var questType: QuestType,
     var isFinished: Boolean = false,
+    var isTimed: Boolean = false,
     var isPublic: Boolean = true
 ) : Parcelable
