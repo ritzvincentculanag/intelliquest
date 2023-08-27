@@ -12,7 +12,7 @@ import tech.ritzvincentculanag.intelliquest.model.Quest
 interface QuestDao {
 
     @Insert
-    suspend fun insert(quest: Quest)
+    suspend fun insert(quest: Quest): Long
 
     @Update
     suspend fun update(quest: Quest)

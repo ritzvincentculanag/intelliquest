@@ -8,8 +8,8 @@ class QuestRepository(private val questDao: QuestDao) {
 
     private val quests: Flow<List<Quest>> = questDao.getQuests()
 
-    suspend fun insert(quest: Quest) {
-        questDao.insert(quest)
+    suspend fun insert(quest: Quest): Long {
+        return questDao.insert(quest)
     }
 
     suspend fun update(quest: Quest) {
