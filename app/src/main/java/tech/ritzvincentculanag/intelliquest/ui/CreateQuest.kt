@@ -9,8 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentCreateQuestBinding
 import tech.ritzvincentculanag.intelliquest.model.QuestType
+import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.util.Validators
 import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.fieldIsEmpty
 import tech.ritzvincentculanag.intelliquest.viewmodel.CreateQuestViewModel
@@ -69,7 +75,31 @@ class CreateQuest : Fragment() {
 
     private fun setupOnClickListeners() {
         binding.actionCreate.setOnClickListener {
+            val titleIsValid = !fieldIsEmpty(binding.containerTitle)
+            val descriptionIsValid = !fieldIsEmpty(binding.containerDescription)
+            val questTypeIsValid = !fieldIsEmpty(binding.containerQuestType)
+            val durationIsValid = durationIsValid()
 
+            if (
+                !titleIsValid &&
+                !descriptionIsValid &&
+                !questTypeIsValid &&
+                !durationIsValid
+            ) {
+                Snacks.shortSnack(binding.root)
+                return@setOnClickListener
+            }
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Create quest")
+                .setMessage("Are you sure you want to create the quest?")
+                .setPositiveButton(getString(R.string.dialog_positive_button_title)) { _, _ ->
+                    createQuest()
+                }
+                .setNegativeButton(getString(R.string.dialog_negative_button_title)) { _, _ ->
+
+                }
+                .show()
         }
     }
 
@@ -107,15 +137,31 @@ class CreateQuest : Fragment() {
                 return@setOnFocusChangeListener
             }
 
-            val duration = binding.inputDuration.text?.toString()?.trim()?.toInt() ?: 0
-            if (duration < 10 || duration > 60) {
-                Validators.setError(
-                    field = binding.containerDuration,
-                    message = "Minimum is 10 and maximum is 60"
-                )
-            } else {
-                Validators.clearError(binding.containerDuration)
+            durationIsValid()
+        }
+    }
+
+    private fun createQuest() {
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.createQuest().collect {
+                viewModel.newQuest = it ?: -1
             }
         }
+    }
+
+    private fun durationIsValid(): Boolean {
+        val duration = binding.inputDuration.text?.toString()?.trim()?.toInt() ?: 0
+        val isValid = duration < 10 || duration > 60
+
+        if (isValid) {
+            Validators.setError(
+                field = binding.containerDuration,
+                message = "Minimum is 10 and maximum is 60"
+            )
+        } else {
+            Validators.clearError(binding.containerDuration)
+        }
+
+        return isValid
     }
 }
