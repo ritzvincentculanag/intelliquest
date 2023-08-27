@@ -4,8 +4,10 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 import tech.ritzvincentculanag.intelliquest.model.User
 import tech.ritzvincentculanag.intelliquest.repository.UserRepository
@@ -24,12 +26,11 @@ class LoginViewModel(private val application: Application) : ViewModel() {
         return userRepository.getUser(username, password)
     }
 
-    fun login(view: View): Boolean {
+    fun login(view: View): Flow<Boolean> {
         val username = inputUsername.value ?: ""
         val password = inputPassword.value ?: ""
         var isLoggedIn = false
-
-        runBlocking {
+        val isLoggedInFlow = flow {
             getUser(username, password).collect { user ->
                 if (user == null) {
                     Snacks.shortSnack(view, "User not found")
@@ -38,10 +39,12 @@ class LoginViewModel(private val application: Application) : ViewModel() {
 
                 isLoggedIn = true
                 session.saveSession(user)
+                emit(isLoggedIn)
             }
         }
 
-        return isLoggedIn
+
+        return isLoggedInFlow.flowOn(Dispatchers.Default)
     }
 
 }
