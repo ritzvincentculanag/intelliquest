@@ -3,13 +3,13 @@ package tech.ritzvincentculanag.intelliquest.viewmodel.factory
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.ProfileViewModel
 
-class UserViewModelFactory(private val application: Application): ViewModelProvider.Factory {
+class ProfileViewModelFactory(private val application: Application): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-            UserViewModel(application) as T
+        return if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            ProfileViewModel(application) as T
         } else {
             throw IllegalArgumentException("ViewModel not found")
         }

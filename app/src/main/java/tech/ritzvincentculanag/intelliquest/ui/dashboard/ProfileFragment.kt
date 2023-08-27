@@ -13,16 +13,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.LoginActivity
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentProfileBinding
-import tech.ritzvincentculanag.intelliquest.viewmodel.factory.UserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
-import tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.ProfileViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.ProfileViewModelFactory
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var viewModel: UserViewModel
-    private lateinit var factory: UserViewModelFactory
+    private lateinit var viewModel: ProfileViewModel
+    private lateinit var factory: ProfileViewModelFactory
     private lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
@@ -30,16 +30,16 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        setUpFragment()
+        setupFragment()
         loadUserData()
-        loadListeners()
+        setOnClickListeners()
 
         return binding.root
     }
 
-    private fun setUpFragment() {
-        factory = UserViewModelFactory(requireActivity().application)
-        viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
+    private fun setupFragment() {
+        factory = ProfileViewModelFactory(requireActivity().application)
+        viewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
         sessionManager = SessionManager(requireContext())
         binding = FragmentProfileBinding.inflate(layoutInflater)
     }
@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun loadListeners() {
+    private fun setOnClickListeners() {
         binding.actionLogout.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Logout")
