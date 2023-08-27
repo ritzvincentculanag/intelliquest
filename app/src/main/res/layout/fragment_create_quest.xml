@@ -95,9 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
                 android:text="Public"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/optionTime"
                 app:layout_constraintTop_toBottomOf="@+id/optionTime" />
 
@@ -152,6 +150,30 @@
                     android:hint="Duration"
                     android:inputType="number|numberSigned" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/actionCreate"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:text="Create"
+                app:layout_constraintEnd_toEndOf="@+id/containerDuration"
+                app:layout_constraintStart_toStartOf="@+id/optionPublic"
+                app:layout_constraintTop_toBottomOf="@+id/optionPublic" />
+
+            <Button
+                android:id="@+id/actionViewChallenges"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                android:enabled="false"
+                android:text="View challenges"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/actionCreate"
+                app:layout_constraintStart_toStartOf="@+id/actionCreate"
+                app:layout_constraintTop_toBottomOf="@+id/actionCreate" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
