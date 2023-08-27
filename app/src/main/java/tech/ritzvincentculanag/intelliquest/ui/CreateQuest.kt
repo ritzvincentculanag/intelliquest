@@ -18,6 +18,7 @@ import tech.ritzvincentculanag.intelliquest.databinding.FragmentCreateQuestBindi
 import tech.ritzvincentculanag.intelliquest.model.QuestType
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.util.Validators
+import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.clearError
 import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.fieldIsEmpty
 import tech.ritzvincentculanag.intelliquest.viewmodel.CreateQuestViewModel
 import tech.ritzvincentculanag.intelliquest.viewmodel.factory.CreateQuestViewModelFactory
@@ -51,8 +52,10 @@ class CreateQuest : Fragment() {
         binding.viewModel = viewModel
 
         if (args.questState.isCreating) {
-            binding.actionCreateQuestion.visibility = View.INVISIBLE
             binding.actionDeleteQuest.visibility = View.INVISIBLE
+            binding.actionCreateChallenges.visibility = View.INVISIBLE
+        } else {
+            binding.actionCreate.visibility = View.INVISIBLE
         }
     }
 
@@ -78,7 +81,11 @@ class CreateQuest : Fragment() {
             val titleIsValid = !fieldIsEmpty(binding.containerTitle)
             val descriptionIsValid = !fieldIsEmpty(binding.containerDescription)
             val questTypeIsValid = !fieldIsEmpty(binding.containerQuestType)
-            val durationIsValid = durationIsValid()
+            val durationIsValid = if (binding.inputDuration.text.toString().isEmpty()) {
+                true
+            } else {
+                durationIsValid()
+            }
 
             if (
                 !titleIsValid &&
@@ -95,6 +102,7 @@ class CreateQuest : Fragment() {
                 .setMessage("Are you sure you want to create the quest?")
                 .setPositiveButton(getString(R.string.dialog_positive_button_title)) { _, _ ->
                     createQuest()
+                    showActions()
                 }
                 .setNegativeButton(getString(R.string.dialog_negative_button_title)) { _, _ ->
 
@@ -106,8 +114,11 @@ class CreateQuest : Fragment() {
     private fun setupObservers() {
         viewModel.inputTimed.observe(viewLifecycleOwner) { isTimed ->
             if (!isTimed) {
-                binding.inputDuration.text?.clear()
+                clearError(binding.containerDuration)
             }
+
+            val duration = if (isTimed) "15" else ""
+            binding.inputDuration.setText(duration)
             binding.inputDuration.isEnabled = isTimed ?: false
         }
     }
@@ -149,6 +160,12 @@ class CreateQuest : Fragment() {
         }
     }
 
+    private fun showActions() {
+        binding.actionCreate.isEnabled = false
+        binding.actionDeleteQuest.visibility = View.VISIBLE
+        binding.actionCreateChallenges.visibility = View.VISIBLE
+    }
+
     private fun durationIsValid(): Boolean {
         val duration = binding.inputDuration.text?.toString()?.trim()?.toInt() ?: 0
         val isValid = duration < 10 || duration > 60
@@ -159,7 +176,7 @@ class CreateQuest : Fragment() {
                 message = "Minimum is 10 and maximum is 60"
             )
         } else {
-            Validators.clearError(binding.containerDuration)
+            clearError(binding.containerDuration)
         }
 
         return isValid
