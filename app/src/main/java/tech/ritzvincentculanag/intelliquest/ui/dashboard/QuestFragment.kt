@@ -52,12 +52,9 @@ class QuestFragment : Fragment() {
     }
 
     private fun showNoQuests(adapter: QuestAdapter) {
-        if (adapter.itemCount > 0) {
+        if (adapter.itemCount == 0) {
             binding.noQuestCover.visibility = View.VISIBLE
             binding.noQuestLabel.visibility = View.VISIBLE
-        } else {
-            binding.noQuestCover.visibility = View.INVISIBLE
-            binding.noQuestLabel.visibility = View.INVISIBLE
         }
     }
 
