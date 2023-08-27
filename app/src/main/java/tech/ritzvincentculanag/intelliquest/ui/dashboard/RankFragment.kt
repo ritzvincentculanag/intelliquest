@@ -11,15 +11,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentRankBinding
-import tech.ritzvincentculanag.intelliquest.viewmodel.factory.UserViewModelFactory
 import tech.ritzvincentculanag.intelliquest.model.adapter.RankAdapter
-import tech.ritzvincentculanag.intelliquest.viewmodel.UserViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.RankViewModel
+import tech.ritzvincentculanag.intelliquest.viewmodel.factory.RankViewModelFactory
 
 class RankFragment : Fragment() {
 
     private lateinit var binding: FragmentRankBinding
-    private lateinit var viewModel: UserViewModel
-    private lateinit var factory: UserViewModelFactory
+    private lateinit var viewModel: RankViewModel
+    private lateinit var factory: RankViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,8 +33,8 @@ class RankFragment : Fragment() {
     }
 
     private fun setupFragment() {
-        factory = UserViewModelFactory(requireActivity().application)
-        viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
+        factory = RankViewModelFactory(requireActivity().application)
+        viewModel = ViewModelProvider(this, factory)[RankViewModel::class.java]
         binding = FragmentRankBinding.inflate(layoutInflater)
     }
 
