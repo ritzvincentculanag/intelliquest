@@ -107,14 +107,17 @@ class CreateQuest : Fragment() {
             val titleIsValid = !fieldIsEmpty(binding.containerTitle)
             val descriptionIsValid = !fieldIsEmpty(binding.containerDescription)
             val questTypeIsValid = !fieldIsEmpty(binding.containerQuestType)
-            val durationIsValid = durationIsValid()
 
             if (
                 !titleIsValid &&
                 !descriptionIsValid &&
-                !questTypeIsValid &&
-                !durationIsValid
+                !questTypeIsValid
             ) {
+                Snacks.shortSnack(binding.root)
+                return@setOnClickListener
+            }
+
+            if (!durationIsValid()) {
                 Snacks.shortSnack(binding.root)
                 return@setOnClickListener
             }
