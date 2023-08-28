@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentQuestBinding
 import tech.ritzvincentculanag.intelliquest.model.Quest
+import tech.ritzvincentculanag.intelliquest.model.QuestType
 import tech.ritzvincentculanag.intelliquest.model.adapter.QuestAdapter
 import tech.ritzvincentculanag.intelliquest.viewmodel.QuestViewModel
 import tech.ritzvincentculanag.intelliquest.viewmodel.factory.QuestViewModelFactory
@@ -38,7 +39,12 @@ class QuestFragment : Fragment(), QuestAdapter.QuestInterface {
 
     override fun onStartClick(position: Int) {
         val quest = quests[position]
-        val direction = QuestFragmentDirections.actionQuestFragmentToQuestActivity(quest)
+        val direction = when (quest.questType) {
+            QuestType.EASY -> QuestFragmentDirections.actionQuestFragmentToQuestActivity(quest)
+            QuestType.MEDIUM -> QuestFragmentDirections.actionQuestFragmentToHardQuestActivity(quest)
+            QuestType.HARD -> QuestFragmentDirections.actionQuestFragmentToHardQuestActivity(quest)
+        }
+
         findNavController().navigate(direction)
     }
 
@@ -62,13 +68,6 @@ class QuestFragment : Fragment(), QuestAdapter.QuestInterface {
                     adapter.setQuests(quests)
                 }
             }
-        }
-    }
-
-    private fun showNoQuests(adapter: QuestAdapter) {
-        if (adapter.itemCount == 0) {
-            binding.noQuestCover.visibility = View.VISIBLE
-            binding.noQuestLabel.visibility = View.VISIBLE
         }
     }
 
