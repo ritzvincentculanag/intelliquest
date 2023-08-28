@@ -28,7 +28,7 @@ interface UserDao {
     @Query("SELECT * FROM Users WHERE userId = :userId")
     fun getUser(userId: Int): Flow<User>
 
-    @Query("SELECT * FROM Users")
+    @Query("SELECT * FROM Users ORDER BY score DESC")
     fun getUsers(): Flow<List<User>>
 
     @Transaction
