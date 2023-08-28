@@ -5,10 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.model.Challenge
 
-class ChallengeAdapter : RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder>()  {
+class ChallengeAdapter(
+    private val cardEvent: ChallengeAdapterEvent
+) : RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder>() {
 
     private var challenges: List<Challenge> = mutableListOf()
 
@@ -30,8 +33,25 @@ class ChallengeAdapter : RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHold
         notifyDataSetChanged()
     }
 
-    inner class ChallengeViewHolder(view: View) :  RecyclerView.ViewHolder(view) {
+    inner class ChallengeViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        private val card: MaterialCardView = view.findViewById(R.id.challegeCard)
         val challengeQuestion: TextView = view.findViewById(R.id.challengeQuestion)
+
+        init {
+            card.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                cardEvent.onItemClick(adapterPosition)
+            }
+        }
+    }
+
+    interface ChallengeAdapterEvent {
+        fun onItemClick(position: Int)
     }
 
 }
