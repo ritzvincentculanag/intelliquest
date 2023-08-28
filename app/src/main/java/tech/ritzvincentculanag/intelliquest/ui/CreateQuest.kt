@@ -52,6 +52,10 @@ class CreateQuest : Fragment() {
         binding.viewModel = viewModel
 
         if (args.questState?.isCreating == true) {
+            viewModel.currentQuest = 0
+            viewModel.inputTimed.value = false
+            viewModel.inputPublic.value = false
+
             binding.actionDeleteQuest.visibility = View.INVISIBLE
             binding.actionCreateChallenges.visibility = View.INVISIBLE
         } else {
@@ -61,7 +65,7 @@ class CreateQuest : Fragment() {
         if (args.quest != null) {
             val quest = args.quest!!
 
-            viewModel.newQuest = quest.questId.toLong()
+            viewModel.currentQuest = quest.questId.toLong()
             viewModel.inputTitle.value = quest.name
             viewModel.inputDescription.value = quest.description
             viewModel.inputQuestType.value = quest.questType.name
@@ -167,7 +171,7 @@ class CreateQuest : Fragment() {
     private fun createQuest() {
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.createQuest().collect {
-                viewModel.newQuest = it ?: -1
+                viewModel.currentQuest = it ?: -1
             }
         }
     }
@@ -175,7 +179,7 @@ class CreateQuest : Fragment() {
     private fun updateQuest() {
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.updateQuest().collect {
-                viewModel.newQuest = (it ?: -1).toLong()
+                viewModel.currentQuest = (it ?: -1).toLong()
             }
         }
     }
