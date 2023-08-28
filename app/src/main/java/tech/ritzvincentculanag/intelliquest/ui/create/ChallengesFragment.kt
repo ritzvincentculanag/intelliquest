@@ -32,9 +32,8 @@ class ChallengesFragment : Fragment() {
 
     private fun setupOnClickListeners() {
         binding.actionCreateChallenge.setOnClickListener {
-            val questType = args.quest.questType
-            val createFragment: BottomSheetDialogFragment = when (questType) {
-                QuestType.EASY -> CreateEasyChallenge()
+            val createFragment: BottomSheetDialogFragment = when (args.quest.questType) {
+                QuestType.EASY -> CreateEasyChallenge(args.quest)
                 QuestType.MEDIUM -> CreateMediumChallenge()
                 QuestType.HARD -> CreateHardChallenge()
                 else -> {
