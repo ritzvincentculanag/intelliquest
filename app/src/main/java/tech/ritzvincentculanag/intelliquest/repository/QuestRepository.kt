@@ -12,8 +12,8 @@ class QuestRepository(private val questDao: QuestDao) {
         return questDao.insert(quest)
     }
 
-    suspend fun update(quest: Quest) {
-        questDao.update(quest)
+    suspend fun update(quest: Quest): Int {
+        return questDao.update(quest)
     }
 
     suspend fun delete(quest: Quest) {
