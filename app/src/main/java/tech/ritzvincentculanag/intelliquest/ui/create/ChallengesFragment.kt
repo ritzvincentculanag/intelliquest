@@ -65,7 +65,11 @@ class ChallengesFragment : Fragment(), ChallengeAdapter.ChallengeAdapterEvent{
                     if (questChallenges?.challenges?.isNotEmpty()!!) {
                         binding.noChallengeCover.visibility = View.INVISIBLE
                         binding.noChallengeLabel.visibility = View.INVISIBLE
+                    } else {
+                        binding.noChallengeCover.visibility = View.VISIBLE
+                        binding.noChallengeLabel.visibility = View.VISIBLE
                     }
+
                     challenges.clear()
                     challenges.addAll(questChallenges.challenges)
                     adapter.setChallenges(challenges)
