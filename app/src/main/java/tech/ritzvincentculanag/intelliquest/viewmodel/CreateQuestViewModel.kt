@@ -15,6 +15,7 @@ import tech.ritzvincentculanag.intelliquest.util.SessionManager
 class CreateQuestViewModel(private val application: Application) : ViewModel() {
 
     private val repository = AppDatabase.getDatabase(application).questDao()
+    private val session = SessionManager(application)
 
     var newQuest: Long = -1
 
@@ -27,22 +28,35 @@ class CreateQuestViewModel(private val application: Application) : ViewModel() {
 
     fun createQuest(): Flow<Long?> {
         val questFlow = flow {
-            val session = SessionManager(application)
             val userId = session.getInt("USER_ID")
-            val questId = repository.insert(Quest(
-                questId = 0,
-                originUserId = userId,
-                timeDuration = inputDuration.value?.toInt() ?: 15,
-                name = inputTitle.value ?: "",
-                description = inputDescription.value ?: "",
-                questType = QuestType.valueOf(inputQuestType.value ?: "EASY"),
-                isTimed = inputTimed.value ?: false,
-                isPublic = inputPublic.value ?: false
-            ))
+            val questId = repository.insert(getQuest(userId))
 
             emit(questId)
         }
 
         return questFlow.flowOn(Dispatchers.IO)
     }
+
+    fun updateQuest(): Flow<Int?> {
+        val questFlow = flow {
+            val userId = session.getInt("USER_ID")
+            val quest = getQuest(userId)
+            val questId = repository.update(quest)
+
+            emit(questId)
+        }
+
+        return questFlow.flowOn(Dispatchers.IO)
+    }
+
+    private fun getQuest(userId: Int): Quest = Quest(
+        questId = newQuest.toInt(),
+        originUserId = userId,
+        timeDuration = inputDuration.value?.toInt() ?: 15,
+        name = inputTitle.value ?: "",
+        description = inputDescription.value ?: "",
+        questType = QuestType.valueOf(inputQuestType.value ?: "EASY"),
+        isTimed = inputTimed.value ?: false,
+        isPublic = inputPublic.value ?: false
+    )
 }
