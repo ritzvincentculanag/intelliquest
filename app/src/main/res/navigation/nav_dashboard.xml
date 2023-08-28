@@ -48,5 +48,17 @@
             app:argType="tech.ritzvincentculanag.intelliquest.model.Quest"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_createQuest_to_challengesFragment"
+            app:destination="@id/challengesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/challengesFragment"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.create.ChallengesFragment"
+        android:label="fragment_challenges"
+        tools:layout="@layout/fragment_challenges" >
+        <argument
+            android:name="quest"
+            app:argType="tech.ritzvincentculanag.intelliquest.model.Quest" />
     </fragment>
 </navigation>
