@@ -17,7 +17,7 @@ class CreateQuestViewModel(private val application: Application) : ViewModel() {
     private val repository = AppDatabase.getDatabase(application).questDao()
     private val session = SessionManager(application)
 
-    var newQuest: Long = -1
+    var currentQuest: Long = -1
 
     var inputTitle = MutableLiveData<String>()
     var inputDescription = MutableLiveData<String>()
@@ -50,13 +50,13 @@ class CreateQuestViewModel(private val application: Application) : ViewModel() {
     }
 
     private fun getQuest(userId: Int): Quest = Quest(
-        questId = newQuest.toInt(),
+        questId = currentQuest.toInt(),
         originUserId = userId,
         timeDuration = inputDuration.value?.toInt() ?: 15,
         name = inputTitle.value ?: "",
         description = inputDescription.value ?: "",
         questType = QuestType.valueOf(inputQuestType.value ?: "EASY"),
-        isTimed = inputTimed.value ?: false,
-        isPublic = inputPublic.value ?: false
+        isTimed = inputTimed.value!!,
+        isPublic = inputPublic.value!!
     )
 }
