@@ -47,7 +47,7 @@ abstract class AppDatabase : RoomDatabase() {
 
                 val user = INSTANCE?.userDao()
                 val quest = INSTANCE?.questDao()
-                val admin = User(
+                val adminRitchie = User(
                     userId = 0,
                     firstName = "Ritz Vincent",
                     lastName = "Culanag",
@@ -56,9 +56,19 @@ abstract class AppDatabase : RoomDatabase() {
                     password = "J&Jwuth10",
                     score = 0
                 )
+                val adminJayb = User(
+                    userId = 0,
+                    firstName = "Aljayvee",
+                    lastName = "Versola",
+                    middleName = "Posadas",
+                    username = "aljayveevee",
+                    password = "J&Jwuth10",
+                    score = 0
+                )
 
                 CoroutineScope(Dispatchers.IO).launch {
-                    user?.insert(user = admin)
+                    user?.insert(user = adminRitchie)
+                    user?.insert(user = adminJayb)
                     quest?.insert(Quest(
                         questId = 0,
                         originUserId = 1,
