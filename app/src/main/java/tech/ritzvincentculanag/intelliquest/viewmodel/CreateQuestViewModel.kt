@@ -3,10 +3,12 @@ package tech.ritzvincentculanag.intelliquest.viewmodel
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.model.QuestType
@@ -47,6 +49,15 @@ class CreateQuestViewModel(private val application: Application) : ViewModel() {
         }
 
         return questFlow.flowOn(Dispatchers.IO)
+    }
+
+    fun deleteQuest() {
+        viewModelScope.launch {
+            val userId = session.getInt("USER_ID")
+            val quest = getQuest(userId)
+
+            repository.delete(quest)
+        }
     }
 
     private fun getQuest(userId: Int): Quest = Quest(
