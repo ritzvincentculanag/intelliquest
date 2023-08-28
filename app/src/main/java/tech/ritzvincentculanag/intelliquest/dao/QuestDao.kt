@@ -15,7 +15,7 @@ interface QuestDao {
     suspend fun insert(quest: Quest): Long
 
     @Update
-    suspend fun update(quest: Quest)
+    suspend fun update(quest: Quest): Int
 
     @Delete
     suspend fun delete(quest: Quest)
