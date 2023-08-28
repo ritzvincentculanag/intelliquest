@@ -175,7 +175,7 @@ class CreateQuest : Fragment() {
     private fun updateQuest() {
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.updateQuest().collect {
-                viewModel.newQuest = it!!.toLong()
+                viewModel.newQuest = (it ?: -1).toLong()
             }
         }
     }
