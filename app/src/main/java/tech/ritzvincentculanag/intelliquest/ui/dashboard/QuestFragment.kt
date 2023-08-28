@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,6 +16,7 @@ import tech.ritzvincentculanag.intelliquest.databinding.FragmentQuestBinding
 import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.model.QuestType
 import tech.ritzvincentculanag.intelliquest.model.adapter.QuestAdapter
+import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.viewmodel.QuestViewModel
 import tech.ritzvincentculanag.intelliquest.viewmodel.factory.QuestViewModelFactory
 
@@ -45,7 +47,28 @@ class QuestFragment : Fragment(), QuestAdapter.QuestInterface {
             QuestType.HARD -> QuestFragmentDirections.actionQuestFragmentToHardQuestActivity(quest)
         }
 
-        findNavController().navigate(direction)
+        CoroutineScope(Dispatchers.Default).launch {
+            viewModel.getQuestChallenges().collect {
+                val items = it.find { it.quest.questId == quest.questId }
+                activity?.runOnUiThread {
+                    if (items?.challenges?.isNotEmpty()!!) {
+                        findNavController().navigate(direction)
+                        return@runOnUiThread
+                    }
+
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Warning")
+                        .setMessage("Can't proceed to quest because quest is empty")
+                        .setNeutralButton("Sad naman ng beshy ko") { _, _ ->
+                            Snacks.shortSnack(
+                                view = binding.root,
+                                message = "Aborting quest"
+                            )
+                        }
+                        .show()
+                }
+            }
+        }
     }
 
     private fun setupFragment() {
@@ -63,6 +86,10 @@ class QuestFragment : Fragment(), QuestAdapter.QuestInterface {
         CoroutineScope(Dispatchers.Default).launch {
             viewModel.getQuests().collect {
                 activity?.runOnUiThread {
+                    if (it.isEmpty()) {
+                        return@runOnUiThread
+                    }
+
                     quests.clear()
                     quests.addAll(it)
                     adapter.setQuests(quests)

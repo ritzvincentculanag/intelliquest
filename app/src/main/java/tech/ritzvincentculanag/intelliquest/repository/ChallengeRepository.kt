@@ -1,6 +1,9 @@
 package tech.ritzvincentculanag.intelliquest.repository
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import tech.ritzvincentculanag.intelliquest.dao.ChallengeDao
 import tech.ritzvincentculanag.intelliquest.model.Challenge
 import tech.ritzvincentculanag.intelliquest.model.relationship.ChallengeOptions
@@ -9,8 +12,13 @@ class ChallengeRepository(private val challengeDao: ChallengeDao) {
 
     private val challengeOptions = challengeDao.getChallengeOptions()
 
-    suspend fun insert(challenge: Challenge) {
-        challengeDao.insert(challenge)
+    fun insert(challenge: Challenge): Flow<Long> {
+        val challengeFlow = flow {
+            val challengeId = challengeDao.insert(challenge)
+            emit(challengeId)
+        }
+
+        return challengeFlow.flowOn(Dispatchers.IO)
     }
 
     suspend fun update(challenge: Challenge) {

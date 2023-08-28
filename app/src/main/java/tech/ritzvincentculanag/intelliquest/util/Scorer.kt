@@ -3,6 +3,7 @@ package tech.ritzvincentculanag.intelliquest.util
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
 
@@ -13,10 +14,15 @@ class Scorer {
             val session = SessionManager(context)
             val userId = session.getInt("USER_ID")
             val user = repository.getUser(userId)
+            val userFlow = flow {
+                user.collect {
+                    emit(it)
+                }
+            }
 
             CoroutineScope(Dispatchers.IO).launch {
-                user.collect {
-                    it.score = score
+                userFlow.collect {
+                    it.score += score
                     repository.update(it)
                 }
             }

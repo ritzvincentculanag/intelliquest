@@ -52,15 +52,20 @@ class CreateHardChallenge(private val quest: Quest) : BottomSheetDialogFragment(
             )
         }
 
+        var challengeId = 0
         val challenge = Challenge(
-            challengeId = 0,
+            challengeId = challengeId,
             originQuestId = quest.questId,
             question = binding.inputHardQuestion.text.toString(),
             answer = binding.inputHardAnswer.text.toString()
         )
 
         CoroutineScope(Dispatchers.IO).launch {
-            repository.insert(challenge)
+            repository.insert(challenge).collect {
+                activity?.runOnUiThread {
+                    challengeId = it.toInt()
+                }
+            }
         }
 
         dismiss()

@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.dao.ChallengeDao
+import tech.ritzvincentculanag.intelliquest.dao.OptionDao
 import tech.ritzvincentculanag.intelliquest.dao.QuestDao
 import tech.ritzvincentculanag.intelliquest.dao.UserDao
 import tech.ritzvincentculanag.intelliquest.model.Challenge
@@ -28,6 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun questDao(): QuestDao
     abstract fun challengeDao(): ChallengeDao
+    abstract fun optionDao(): OptionDao
 
     companion object {
 

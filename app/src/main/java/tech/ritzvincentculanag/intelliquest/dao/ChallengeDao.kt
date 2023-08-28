@@ -12,14 +12,14 @@ import tech.ritzvincentculanag.intelliquest.model.relationship.ChallengeOptions
 @Dao
 interface ChallengeDao {
 
-    @Insert
-    suspend fun insert(challenge: Challenge)
-
     @Update
     suspend fun update(challenge: Challenge)
 
     @Delete
     suspend fun delete(challenge: Challenge)
+
+    @Insert
+    fun insert(challenge: Challenge): Long
 
     @Query("SELECT * From Challenges")
     fun getChallengeOptions(): Flow<List<ChallengeOptions>>

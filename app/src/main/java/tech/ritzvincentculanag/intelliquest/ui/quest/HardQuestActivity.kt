@@ -69,7 +69,7 @@ class HardQuestActivity : AppCompatActivity(), View.OnClickListener {
             return
         }
 
-        if (answer == challenge.answer) {
+        if (answer.contentEquals(challenge.answer)) {
             score += scoreIncrement
         }
 

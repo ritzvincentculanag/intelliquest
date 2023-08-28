@@ -48,9 +48,13 @@ class EasyQuestActivity : AppCompatActivity(), View.OnClickListener {
 
         resetTimer()
         setupTimer()
-        setupLayout()
         setupQuest()
         registerOnBackPressed()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupLayout()
     }
 
     override fun onClick(p0: View?) {
