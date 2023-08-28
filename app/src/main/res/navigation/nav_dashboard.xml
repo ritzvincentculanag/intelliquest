@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_campFragment_to_createQuest"
             app:destination="@id/createQuest" />
+        <action
+            android:id="@+id/action_campFragment_to_createQuest2"
+            app:destination="@id/createQuest" />
     </fragment>
     <fragment
         android:id="@+id/questFragment"
@@ -36,6 +39,13 @@
         tools:layout="@layout/fragment_create_quest" >
         <argument
             android:name="questState"
-            app:argType="tech.ritzvincentculanag.intelliquest.model.QuestState" />
+            app:argType="tech.ritzvincentculanag.intelliquest.model.QuestState"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="quest"
+            app:argType="tech.ritzvincentculanag.intelliquest.model.Quest"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>
