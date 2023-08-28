@@ -1,11 +1,11 @@
 package tech.ritzvincentculanag.intelliquest.ui.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -14,13 +14,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentChallengesBinding
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
+import tech.ritzvincentculanag.intelliquest.model.Challenge
 import tech.ritzvincentculanag.intelliquest.model.QuestType
 import tech.ritzvincentculanag.intelliquest.model.adapter.ChallengeAdapter
 import tech.ritzvincentculanag.intelliquest.repository.QuestRepository
 
-class ChallengesFragment : Fragment() {
+class ChallengesFragment : Fragment(), ChallengeAdapter.ChallengeAdapterEvent{
 
     private val args by navArgs<ChallengesFragmentArgs>()
+    private val challenges = mutableListOf<Challenge>()
 
     private lateinit var binding: FragmentChallengesBinding
     private lateinit var repository: QuestRepository
@@ -36,13 +38,20 @@ class ChallengesFragment : Fragment() {
         return binding.root
     }
 
+    override fun onItemClick(position: Int) {
+        val challenge = challenges[position]
+        val dialog = getDialog(challenge)
+
+        dialog.show(activity?.supportFragmentManager!!, "UPDATE_CHALLENGE")
+    }
+
     private fun setupFragment() {
         repository = QuestRepository(AppDatabase.getDatabase(requireContext()).questDao())
         binding = FragmentChallengesBinding.inflate(layoutInflater)
     }
 
     private fun setupRecyclerView() {
-        val adapter = ChallengeAdapter()
+        val adapter = ChallengeAdapter(this)
 
         binding.challengeList.layoutManager = LinearLayoutManager(requireContext())
         binding.challengeList.adapter = adapter
@@ -53,8 +62,13 @@ class ChallengesFragment : Fragment() {
                     item.quest.questId == args.quest.questId
                 }
                 activity?.runOnUiThread {
-                    Log.d("USER_CHALLENGE", questChallenges?.challenges!!.toString())
-                    adapter.setChallenges(questChallenges.challenges)
+                    if (questChallenges?.challenges?.isNotEmpty()!!) {
+                        binding.noChallengeCover.visibility = View.INVISIBLE
+                        binding.noChallengeLabel.visibility = View.INVISIBLE
+                    }
+                    challenges.clear()
+                    challenges.addAll(questChallenges.challenges)
+                    adapter.setChallenges(challenges)
                 }
             }
         }
@@ -62,13 +76,19 @@ class ChallengesFragment : Fragment() {
 
     private fun setupOnClickListeners() {
         binding.actionCreateChallenge.setOnClickListener {
-            val createFragment: BottomSheetDialogFragment = when (args.quest.questType) {
-                QuestType.EASY -> CreateEasyChallenge(args.quest)
-                QuestType.MEDIUM -> CreateMediumChallenge()
-                QuestType.HARD -> CreateHardChallenge()
-            }
-
+            val createFragment: BottomSheetDialogFragment = getDialog()
             createFragment.show(activity?.supportFragmentManager!!, "CREATE_QUEST")
+        }
+        binding.materialToolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun getDialog(challenge: Challenge? = null): BottomSheetDialogFragment {
+        return when (args.quest.questType) {
+            QuestType.EASY -> CreateEasyChallenge(args.quest, challenge)
+            QuestType.MEDIUM -> CreateMediumChallenge()
+            QuestType.HARD -> CreateHardChallenge(args.quest)
         }
     }
 
