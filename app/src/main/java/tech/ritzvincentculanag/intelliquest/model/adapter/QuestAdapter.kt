@@ -9,17 +9,31 @@ import androidx.recyclerview.widget.RecyclerView
 import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.model.Quest
 
-class QuestAdapter : RecyclerView.Adapter<QuestAdapter.QuestViewHolder>() {
+class QuestAdapter(
+    private val listener: QuestInterface
+) : RecyclerView.Adapter<QuestAdapter.QuestViewHolder>() {
 
     private var quests: List<Quest> = mutableListOf()
 
-    inner class QuestViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class QuestViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+        private val questStart: TextView = view.findViewById(R.id.questStart)
+
         val questTitle: TextView = view.findViewById(R.id.questTitle)
         val questDescription: TextView = view.findViewById(R.id.questDescription)
         val questScore: TextView = view.findViewById(R.id.questScore)
         val questTimer: TextView = view.findViewById(R.id.questTimer)
-        val questStart: TextView = view.findViewById(R.id.questStart)
         val questTimerIcon: ImageView = view.findViewById(R.id.questTimerIcon)
+
+        init {
+            questStart.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onStartClick(position)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestViewHolder {
@@ -46,6 +60,10 @@ class QuestAdapter : RecyclerView.Adapter<QuestAdapter.QuestViewHolder>() {
     fun setQuests(quests: List<Quest>) {
         this.quests = quests
         notifyDataSetChanged()
+    }
+
+    interface QuestInterface {
+        fun onStartClick(position: Int)
     }
 
 }
