@@ -26,6 +26,12 @@
         <action
             android:id="@+id/action_questFragment_to_questActivity"
             app:destination="@id/questActivity" />
+        <action
+            android:id="@+id/action_questFragment_to_hardQuestActivity"
+            app:destination="@id/hardQuestActivity" />
+        <action
+            android:id="@+id/action_questFragment_to_mediumQuestActivity"
+            app:destination="@id/mediumQuestActivity" />
     </fragment>
     <fragment
         android:id="@+id/rankFragment"
@@ -74,4 +80,18 @@
             android:name="quest"
             app:argType="tech.ritzvincentculanag.intelliquest.model.Quest" />
     </activity>
+    <activity
+        android:id="@+id/hardQuestActivity"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.quest.HardQuestActivity"
+        android:label="activity_hard_quest"
+        tools:layout="@layout/activity_hard_quest" >
+        <argument
+            android:name="quest"
+            app:argType="tech.ritzvincentculanag.intelliquest.model.Quest" />
+    </activity>
+    <activity
+        android:id="@+id/mediumQuestActivity"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.quest.MediumQuestActivity"
+        android:label="activity_medium_quest"
+        tools:layout="@layout/activity_medium_quest" />
 </navigation>
