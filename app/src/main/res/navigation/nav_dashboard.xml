@@ -67,9 +67,9 @@
     </fragment>
     <activity
         android:id="@+id/questActivity"
-        android:name="tech.ritzvincentculanag.intelliquest.ui.QuestActivity"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.quest.EasyQuestActivity"
         android:label="activity_quest"
-        tools:layout="@layout/activity_quest" >
+        tools:layout="@layout/activity_easy_quest" >
         <argument
             android:name="quest"
             app:argType="tech.ritzvincentculanag.intelliquest.model.Quest" />

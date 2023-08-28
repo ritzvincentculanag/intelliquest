@@ -14,7 +14,7 @@
         android:theme="@style/Theme.IntelliquestKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".ui.QuestActivity"
+            android:name=".ui.quest.EasyQuestActivity"
             android:exported="false" />
         <activity
             android:name=".ui.Dashboard"
