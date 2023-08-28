@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.navArgs
@@ -49,6 +50,7 @@ class EasyQuestActivity : AppCompatActivity(), View.OnClickListener {
         setupTimer()
         setupLayout()
         setupQuest()
+        registerOnBackPressed()
     }
 
     override fun onClick(p0: View?) {
@@ -162,5 +164,24 @@ class EasyQuestActivity : AppCompatActivity(), View.OnClickListener {
             .setNeutralButton("Go back") { _, _ ->
                 findNavController(R.id.navigationDashboard).navigateUp()
             }
+    }
+
+    private fun registerOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                timer.cancel()
+
+                MaterialAlertDialogBuilder(this@EasyQuestActivity)
+                    .setTitle("Exit quest")
+                    .setMessage("All progress will be lost and score will not be recorded.")
+                    .setPositiveButton("Go back") { _, _ ->
+                        finish()
+                    }
+                    .setNegativeButton("Continue") { _, _ ->
+                        timer.start()
+                    }
+                    .show()
+            }
+        })
     }
 }
