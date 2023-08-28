@@ -178,6 +178,7 @@
 
                 <Button
                     android:id="@+id/actionCreateChallenges"
+                    style="?attr/materialIconButtonFilledTonalStyle"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="8dp"
@@ -189,11 +190,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/actionCreate" />
 
                 <Button
-                    android:backgroundTint="?attr/colorError"
                     android:id="@+id/actionDeleteQuest"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginBottom="32dp"
+                    android:backgroundTint="?attr/colorError"
                     android:text="Delete quest"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/actionCreateChallenges"
