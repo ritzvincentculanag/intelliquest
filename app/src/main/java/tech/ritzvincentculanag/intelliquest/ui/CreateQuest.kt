@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.databinding.FragmentCreateQuestBinding
 import tech.ritzvincentculanag.intelliquest.model.QuestType
+import tech.ritzvincentculanag.intelliquest.util.SessionManager
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 import tech.ritzvincentculanag.intelliquest.util.Validators
 import tech.ritzvincentculanag.intelliquest.util.Validators.Companion.clearError
@@ -96,6 +97,12 @@ class CreateQuest : Fragment() {
     }
 
     private fun setupOnClickListeners() {
+        binding.actionCreateChallenges.setOnClickListener {
+            val session = SessionManager(requireContext())
+            val quest = viewModel.getQuest(session.getInt("USER_ID"))
+            val directions = CreateQuestDirections.actionCreateQuestToChallengesFragment(quest)
+            findNavController().navigate(directions)
+        }
         binding.actionCreate.setOnClickListener {
             val titleIsValid = !fieldIsEmpty(binding.containerTitle)
             val descriptionIsValid = !fieldIsEmpty(binding.containerDescription)
@@ -128,7 +135,6 @@ class CreateQuest : Fragment() {
                 }
                 .show()
         }
-
         binding.actionDeleteQuest.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Delete quest")
