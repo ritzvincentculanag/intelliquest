@@ -60,7 +60,7 @@ class CreateQuestViewModel(private val application: Application) : ViewModel() {
         }
     }
 
-    private fun getQuest(userId: Int): Quest = Quest(
+    fun getQuest(userId: Int): Quest = Quest(
         questId = currentQuest.toInt(),
         originUserId = userId,
         timeDuration = inputDuration.value?.toInt() ?: 15,
