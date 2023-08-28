@@ -15,7 +15,10 @@ import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.repository.ChallengeRepository
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 
-class CreateEasyChallenge(private val quest: Quest) : BottomSheetDialogFragment() {
+class CreateEasyChallenge(
+    private val quest: Quest,
+    private val challenge: Challenge? = null
+) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentCreateEasyChallengeBinding
     private lateinit var repository: ChallengeRepository
@@ -26,6 +29,7 @@ class CreateEasyChallenge(private val quest: Quest) : BottomSheetDialogFragment(
         savedInstanceState: Bundle?
     ): View {
         setupFragment()
+        setupLayout()
         setupOnClickListeners()
 
         return binding.root
@@ -36,42 +40,88 @@ class CreateEasyChallenge(private val quest: Quest) : BottomSheetDialogFragment(
         binding = FragmentCreateEasyChallengeBinding.inflate(layoutInflater)
     }
 
+    private fun setupLayout() {
+        if (challenge == null) {
+            binding.actionDeleteEasyChallenge.visibility = View.INVISIBLE
+            return
+        }
+
+        binding.inputEasyQuestion.setText(challenge.question)
+        binding.actionSaveEasyQuestion.text = "Update"
+        if (challenge.answer == "True") {
+            binding.optionTrue.isChecked = true
+        } else {
+            binding.optionFalse.isChecked = true
+        }
+    }
+
     private fun setupOnClickListeners() {
         binding.actionSaveEasyQuestion.setOnClickListener {
-            createChallenge()
+            if (challenge != null) {
+                updateChallenge()
+            } else {
+                createChallenge()
+            }
+        }
+        binding.actionDeleteEasyChallenge.setOnClickListener {
+            val challenge = getChallenge()
+            challenge.challengeId = this.challenge?.challengeId!!
+
+            CoroutineScope(Dispatchers.IO).launch {
+                repository.delete(challenge)
+            }
+
+            dismiss()
         }
     }
 
     private fun createChallenge() {
-        val optionIsValid = binding.radioGroup.checkedRadioButtonId != -1
-        val questionIsValid = binding.inputEasyQuestion.text?.toString()?.isNotEmpty() ?: false
+        if (challengeIsValid()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                repository.insert(getChallenge())
+            }
 
-        if (!optionIsValid || !questionIsValid) {
-            Snacks.longSnack(
-                view = binding.root,
-                message = "Some fields have error"
-            )
-            return
+            dismiss()
         }
+    }
 
+    private fun updateChallenge() {
+        val challenge = getChallenge()
+        challenge.challengeId = this.challenge?.challengeId!!
+
+        if (challengeIsValid()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                repository.update(challenge)
+            }
+
+            dismiss()
+        }
+    }
+
+    private fun getChallenge(): Challenge {
         val originQuestId = quest.questId
         val question = binding.inputEasyQuestion.text.toString()
         val answer = if (binding.optionTrue.isChecked) "True" else "False"
-        val challenge = Challenge(
+
+        return Challenge(
             originQuestId = originQuestId,
             question = question,
             answer = answer
         )
+    }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.insert(challenge)
+    private fun challengeIsValid(): Boolean {
+        val optionIsValid = binding.radioGroup.checkedRadioButtonId != -1
+        val questionIsValid = binding.inputEasyQuestion.text?.toString()?.isNotEmpty() ?: false
+        val challengeIsValid = optionIsValid && questionIsValid
+
+        if (!challengeIsValid) {
+            Snacks.longSnack(
+                view = binding.root,
+                message = "Some fields have error"
+            )
         }
 
-        Snacks.longSnack(
-            view = binding.root,
-            message = "Success"
-        )
-
-        dismiss()
+        return challengeIsValid
     }
 }
