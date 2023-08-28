@@ -22,7 +22,7 @@ import tech.ritzvincentculanag.intelliquest.model.SCORE_EASY
 import tech.ritzvincentculanag.intelliquest.model.SCORE_HARD
 import tech.ritzvincentculanag.intelliquest.model.SCORE_MEDIUM
 import tech.ritzvincentculanag.intelliquest.repository.QuestRepository
-import tech.ritzvincentculanag.intelliquest.util.Snacks
+import tech.ritzvincentculanag.intelliquest.util.Scorer
 
 class EasyQuestActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -55,7 +55,8 @@ class EasyQuestActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         if (position >= challenges.size) {
-            Snacks.shortSnack(binding.root, message = "Score: $score")
+            Scorer.updateScore(this, score)
+            finish()
             return
         }
 
@@ -141,7 +142,8 @@ class EasyQuestActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun nextQuest() {
         if (position >= challenges.size) {
-            Snacks.shortSnack(binding.root, message = "Score: $score")
+            Scorer.updateScore(this, score)
+            finish()
             return
         }
 
