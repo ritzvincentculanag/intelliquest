@@ -8,17 +8,26 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import tech.ritzvincentculanag.intelliquest.dao.ChallengeDao
 import tech.ritzvincentculanag.intelliquest.dao.QuestDao
 import tech.ritzvincentculanag.intelliquest.dao.UserDao
+import tech.ritzvincentculanag.intelliquest.model.Challenge
+import tech.ritzvincentculanag.intelliquest.model.Option
 import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.model.QuestType
 import tech.ritzvincentculanag.intelliquest.model.User
 
-@Database(entities = [User::class, Quest::class], version = 2)
+@Database(entities = [
+    User::class,
+    Quest::class,
+    Challenge::class,
+    Option::class
+], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun questDao(): QuestDao
+    abstract fun challengeDao(): ChallengeDao
 
     companion object {
 
