@@ -60,6 +60,7 @@ class CreateQuest : Fragment() {
             binding.actionCreateChallenges.visibility = View.INVISIBLE
         } else {
             binding.actionCreate.text = "Update"
+            binding.materialToolbar.title = "Update quest"
         }
 
         if (args.quest != null) {
@@ -121,6 +122,25 @@ class CreateQuest : Fragment() {
                     } else {
                         updateQuest()
                     }
+                }
+                .setNegativeButton(getString(R.string.dialog_negative_button_title)) { _, _ ->
+
+                }
+                .show()
+        }
+
+        binding.actionDeleteQuest.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Delete quest")
+                .setMessage("Are you sure you want to proceed?")
+                .setPositiveButton(getString(R.string.dialog_positive_button_title)) { _, _ ->
+                    viewModel.deleteQuest()
+                    Snacks.longSnack(
+                        view = binding.root,
+                        message = "Quest deleted successfully"
+                    )
+                    findNavController().navigateUp()
+                    onDestroy()
                 }
                 .setNegativeButton(getString(R.string.dialog_negative_button_title)) { _, _ ->
 
