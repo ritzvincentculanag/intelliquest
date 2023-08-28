@@ -22,7 +22,11 @@
         android:id="@+id/questFragment"
         android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.QuestFragment"
         android:label="fragment_quest"
-        tools:layout="@layout/fragment_quest" />
+        tools:layout="@layout/fragment_quest" >
+        <action
+            android:id="@+id/action_questFragment_to_questActivity"
+            app:destination="@id/questActivity" />
+    </fragment>
     <fragment
         android:id="@+id/rankFragment"
         android:name="tech.ritzvincentculanag.intelliquest.ui.dashboard.RankFragment"
@@ -61,4 +65,13 @@
             android:name="quest"
             app:argType="tech.ritzvincentculanag.intelliquest.model.Quest" />
     </fragment>
+    <activity
+        android:id="@+id/questActivity"
+        android:name="tech.ritzvincentculanag.intelliquest.ui.QuestActivity"
+        android:label="activity_quest"
+        tools:layout="@layout/activity_quest" >
+        <argument
+            android:name="quest"
+            app:argType="tech.ritzvincentculanag.intelliquest.model.Quest" />
+    </activity>
 </navigation>
