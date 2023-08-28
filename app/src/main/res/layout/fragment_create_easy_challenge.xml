@@ -8,7 +8,7 @@
     tools:context=".ui.create.CreateEasyChallenge">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/containerEasyQuestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputEasyQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Question" />
@@ -34,7 +35,7 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/containerEasyQuestion" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -49,13 +50,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/optionTrue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="True" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/optionFalse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="False" />
@@ -75,7 +76,7 @@
 
     <Button
         style="@style/Widget.Material3.Button"
-        android:id="@+id/button"
+        android:id="@+id/actionSaveEasyQuestion"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
