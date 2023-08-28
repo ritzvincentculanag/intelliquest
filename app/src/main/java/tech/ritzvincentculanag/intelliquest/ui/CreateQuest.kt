@@ -51,11 +51,25 @@ class CreateQuest : Fragment() {
         binding = FragmentCreateQuestBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
 
-        if (args.questState.isCreating) {
+        if (args.questState?.isCreating == true) {
             binding.actionDeleteQuest.visibility = View.INVISIBLE
             binding.actionCreateChallenges.visibility = View.INVISIBLE
         } else {
-            binding.actionCreate.visibility = View.INVISIBLE
+            binding.actionCreate.text = "Update"
+        }
+
+        if (args.quest != null) {
+            val quest = args.quest!!
+
+            viewModel.newQuest = quest.questId.toLong()
+            viewModel.inputTitle.value = quest.name
+            viewModel.inputDescription.value = quest.description
+            viewModel.inputQuestType.value = quest.questType.name
+            viewModel.inputDuration.value = quest.timeDuration.toString()
+            viewModel.inputTimed.value = quest.isTimed
+            viewModel.inputPublic.value = quest.isPublic
+
+            binding.inputQuestType.isEnabled = false
         }
     }
 
@@ -81,11 +95,7 @@ class CreateQuest : Fragment() {
             val titleIsValid = !fieldIsEmpty(binding.containerTitle)
             val descriptionIsValid = !fieldIsEmpty(binding.containerDescription)
             val questTypeIsValid = !fieldIsEmpty(binding.containerQuestType)
-            val durationIsValid = if (binding.inputDuration.text.toString().isEmpty()) {
-                true
-            } else {
-                durationIsValid()
-            }
+            val durationIsValid = durationIsValid()
 
             if (
                 !titleIsValid &&
@@ -98,11 +108,15 @@ class CreateQuest : Fragment() {
             }
 
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Create quest")
-                .setMessage("Are you sure you want to create the quest?")
+                .setTitle("Warning")
+                .setMessage("Are you sure you want to proceed?")
                 .setPositiveButton(getString(R.string.dialog_positive_button_title)) { _, _ ->
-                    createQuest()
-                    showActions()
+                    if (args.questState?.isCreating!!) {
+                        createQuest()
+                        showActions()
+                    } else {
+                        updateQuest()
+                    }
                 }
                 .setNegativeButton(getString(R.string.dialog_negative_button_title)) { _, _ ->
 
@@ -113,12 +127,12 @@ class CreateQuest : Fragment() {
 
     private fun setupObservers() {
         viewModel.inputTimed.observe(viewLifecycleOwner) { isTimed ->
-            if (!isTimed) {
+            if (isTimed) {
                 clearError(binding.containerDuration)
+            } else {
+                viewModel.inputDuration.value = "15"
             }
 
-            val duration = if (isTimed) "15" else ""
-            binding.inputDuration.setText(duration)
             binding.inputDuration.isEnabled = isTimed ?: false
         }
     }
@@ -140,15 +154,13 @@ class CreateQuest : Fragment() {
             }
         }
         binding.inputDuration.setOnFocusChangeListener { _, isFocused ->
-            if (isFocused) {
-                return@setOnFocusChangeListener
-            }
-
             if (fieldIsEmpty(binding.containerDuration)) {
                 return@setOnFocusChangeListener
             }
 
-            durationIsValid()
+            if (!isFocused) {
+                durationIsValid()
+            }
         }
     }
 
@@ -160,6 +172,14 @@ class CreateQuest : Fragment() {
         }
     }
 
+    private fun updateQuest() {
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.updateQuest().collect {
+                viewModel.newQuest = it!!.toLong()
+            }
+        }
+    }
+
     private fun showActions() {
         binding.actionCreate.isEnabled = false
         binding.actionDeleteQuest.visibility = View.VISIBLE
@@ -167,10 +187,14 @@ class CreateQuest : Fragment() {
     }
 
     private fun durationIsValid(): Boolean {
-        val duration = binding.inputDuration.text?.toString()?.trim()?.toInt() ?: 0
-        val isValid = duration < 10 || duration > 60
+        if (!binding.inputDuration.isEnabled) {
+            return false
+        }
 
-        if (isValid) {
+        val duration = viewModel.inputDuration.value?.toInt() ?: 0
+        val isValid = duration in 10..60
+
+        if (!isValid) {
             Validators.setError(
                 field = binding.containerDuration,
                 message = "Minimum is 10 and maximum is 60"
