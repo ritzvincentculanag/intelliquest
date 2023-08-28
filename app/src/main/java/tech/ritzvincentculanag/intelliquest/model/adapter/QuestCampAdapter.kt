@@ -9,14 +9,29 @@ import androidx.recyclerview.widget.RecyclerView
 import tech.ritzvincentculanag.intelliquest.R
 import tech.ritzvincentculanag.intelliquest.model.Quest
 
-class QuestCampAdapter : RecyclerView.Adapter<QuestCampAdapter.QuestCampViewHolder>() {
+class QuestCampAdapter(
+    private val listener: QuestAdapterEvent
+) : RecyclerView.Adapter<QuestCampAdapter.QuestCampViewHolder>() {
 
     private var quests: List<Quest> = mutableListOf()
 
-    inner class QuestCampViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class QuestCampViewHolder(
+        view: View
+    ) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val campTitle: TextView = view.findViewById(R.id.campTitle)
         val campDescription: TextView = view.findViewById(R.id.campDescription)
-        val campEdit: Button = view.findViewById(R.id.campEdit)
+        private val campEdit: Button = view.findViewById(R.id.campEdit)
+
+        init {
+            campEdit.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestCampViewHolder {
@@ -37,6 +52,10 @@ class QuestCampAdapter : RecyclerView.Adapter<QuestCampAdapter.QuestCampViewHold
     fun setQuests(quests: List<Quest>) {
         this.quests = quests
         notifyDataSetChanged()
+    }
+
+    interface QuestAdapterEvent {
+        fun onItemClick(position: Int)
     }
 
 }
