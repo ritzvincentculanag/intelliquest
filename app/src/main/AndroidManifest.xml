@@ -14,6 +14,12 @@
         android:theme="@style/Theme.IntelliquestKotlin"
         tools:targetApi="31">
         <activity
+            android:name=".ui.quest.MediumQuestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.quest.HardQuestActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.quest.EasyQuestActivity"
             android:exported="false" />
         <activity
