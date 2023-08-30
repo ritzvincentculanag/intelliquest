@@ -93,5 +93,9 @@
         android:id="@+id/mediumQuestActivity"
         android:name="tech.ritzvincentculanag.intelliquest.ui.quest.MediumQuestActivity"
         android:label="activity_medium_quest"
-        tools:layout="@layout/activity_medium_quest" />
+        tools:layout="@layout/activity_medium_quest" >
+        <argument
+            android:name="quest"
+            app:argType="tech.ritzvincentculanag.intelliquest.model.Quest" />
+    </activity>
 </navigation>

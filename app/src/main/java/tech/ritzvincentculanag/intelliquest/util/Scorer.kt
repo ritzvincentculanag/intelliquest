@@ -3,6 +3,7 @@ package tech.ritzvincentculanag.intelliquest.util
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import tech.ritzvincentculanag.intelliquest.db.AppDatabase
@@ -24,6 +25,7 @@ class Scorer {
                 userFlow.collect {
                     it.score += score
                     repository.update(it)
+                    this.cancel()
                 }
             }
         }

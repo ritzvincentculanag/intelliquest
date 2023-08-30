@@ -15,7 +15,10 @@ import tech.ritzvincentculanag.intelliquest.model.Quest
 import tech.ritzvincentculanag.intelliquest.repository.ChallengeRepository
 import tech.ritzvincentculanag.intelliquest.util.Snacks
 
-class CreateHardChallenge(private val quest: Quest) : BottomSheetDialogFragment() {
+class CreateHardChallenge(
+    private val quest: Quest,
+    private val challenge: Challenge?
+) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentCreateHardChallengeBinding
     private lateinit var repository: ChallengeRepository

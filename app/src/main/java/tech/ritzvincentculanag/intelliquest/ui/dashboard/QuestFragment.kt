@@ -43,7 +43,7 @@ class QuestFragment : Fragment(), QuestAdapter.QuestInterface {
         val quest = quests[position]
         val direction = when (quest.questType) {
             QuestType.EASY -> QuestFragmentDirections.actionQuestFragmentToQuestActivity(quest)
-            QuestType.MEDIUM -> QuestFragmentDirections.actionQuestFragmentToHardQuestActivity(quest)
+            QuestType.MEDIUM -> QuestFragmentDirections.actionQuestFragmentToMediumQuestActivity(quest)
             QuestType.HARD -> QuestFragmentDirections.actionQuestFragmentToHardQuestActivity(quest)
         }
 
